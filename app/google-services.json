@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "778579997493",
+    "firebase_url": "https://gourmatch.firebaseio.com",
+    "project_id": "gourmatch",
+    "storage_bucket": "gourmatch.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778579997493:android:d9999f6d2c22fc7b",
+        "android_client_info": {
+          "package_name": "umut.gourmatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778579997493-qr6c20ebn7jatqiubv3hmkojfeu5bvcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5aj-wHgZ7qFVhlUvwE7bWiFWQCT9gU2g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
