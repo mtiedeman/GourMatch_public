@@ -8,4 +8,5 @@
     <color name="gourText">#5F0532</color>
     <color name="gourButton">#FF530D</color>
     <color name="gourBox">#E82C0C</color>
+    <color name = "blue">#0000ff</color>
 </resources>
