@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="umutMain">#0ACB3B</color>
+    <color name="gourMain">#FF0000</color>
+    <color name="gourText">#5F0532</color>
+    <color name="gourButton">#FF530D</color>
+    <color name="gourBox">#E82C0C</color>
 </resources>
