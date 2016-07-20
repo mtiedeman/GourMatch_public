@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="umut.gourmatch.CreateAccountActivity">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical"
+       android:layout_gravity="center_horizontal"
+       >
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:fontFamily=""
+           android:layout_gravity="center"
+           android:text="@string/createAcctTitle"
+           android:background="@color/createAcctTitleBackground"
+           android:textColor="@color/gourMain"
+           android:textAlignment="center"
+           android:textSize="@dimen/titleTextHeight"
+           />
+
+
+   </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

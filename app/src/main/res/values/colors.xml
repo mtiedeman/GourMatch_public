@@ -13,4 +13,5 @@
     <color name="gourAuthHint">#5F1205</color>
     <color name="gourHighlight">#0ACB3B</color>
     <color name = "blue">#0000ff</color>
+    <color name="createAcctTitleBackground">#ffffff</color>
 </resources>
