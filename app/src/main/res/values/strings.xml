@@ -9,4 +9,8 @@
     <string name="title_activity_create_account">CreateAccountActivity</string>
     <string name="createAcctTitle">Create Account</string>
     <string name="SignUp">Sign Up!</string>
+    <string name="reset_pass_title">Reset Password</string>
+    <string name="reset">Reset</string>
+    <string name="cancel">Cancel</string>
+    <string name="rest_pass_subtitle">Email address:</string>
 </resources>
