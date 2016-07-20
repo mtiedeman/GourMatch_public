@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SplashActivity extends AppCompatActivity
 {
     @Override
@@ -16,17 +18,16 @@ public class SplashActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        //background image
-        ImageView myImage = (ImageView) findViewById(R.id.imageid);
-        myImage.setAlpha(127);
+//        //background image
+//        ImageView myImage = (ImageView) findViewById(R.id.imageid);
 
-        //pause for 5 seconds before switching to main activity
+        //pause for 1 second(s) before checking whether the user is logged in
         Thread timerThread = new Thread(){
             public void run()
             {
                 try
                 {
-                    sleep(5000);
+                    sleep(1000);
                 }
                 catch(InterruptedException e)
                 {
@@ -34,8 +35,19 @@ public class SplashActivity extends AppCompatActivity
                 }
                 finally
                 {
-                    Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-                    startActivity(intent);
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    if (auth.getCurrentUser() != null) {
+                        //Go to main screen if already logged in
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    } else {
+                        //Go to authentication screen if not logged in
+                        Intent intent = new Intent(getApplicationContext(),AuthActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+
                 }
             }
         };

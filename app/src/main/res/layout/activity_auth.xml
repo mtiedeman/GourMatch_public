@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gourMain"
+    tools:context="umut.gourmatch.AuthActivity">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gourmatch_logo"
+            android:scaleType="fitCenter"
+            android:scaleX=".75"
+            android:scaleY=".75"
+            android:tint="@color/gourAuthLogo"
+            android:layout_gravity="center"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:weightSum="2.5"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="1">
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0px"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/fb_logo"
+                    android:scaleType="fitCenter"
+                    android:layout_weight=".5"
+                    android:clickable="true"
+                    android:onClick="fbLogin"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:weightSum="1">
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="0px"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/google_icon"
+                    android:scaleType="fitCenter"
+                    android:layout_weight=".5"
+                    android:clickable="true"
+                    android:onClick="googleLogin"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/authOr"
+                android:layout_gravity="center"/>
+
+
+        <EditText
+            android:id="@+id/authEmailInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:focusable="true"
+            android:textColorHighlight="@color/gourHighlight"
+            android:textColorHint="@color/gourAuthHint"
+            android:layout_marginTop="46dp"
+            android:layout_below="@+id/imageView"
+            />
+
+        <EditText
+            android:id="@+id/authPassInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:focusable="true"
+            android:textColorHighlight="@color/gourHighlight"
+            android:textColorHint="@color/gourAuthHint"
+            android:layout_marginTop="46dp"
+            android:fontFamily=""
+            />
+
+        <Button
+            android:id="@+id/authSignInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Login"
+            android:background="@color/gourButton"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/authPassReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/authPassReset"
+                android:clickable="true"
+                />
+
+            <TextView
+                android:id="@+id/authCreateAcc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/authCreateAcc"
+                android:clickable="true"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
