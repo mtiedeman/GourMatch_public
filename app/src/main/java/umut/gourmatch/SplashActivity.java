@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity
 {
+    private static final String TAG = "SplashActivity.java";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -36,6 +39,7 @@ public class SplashActivity extends AppCompatActivity
                 finally
                 {
                     FirebaseAuth auth = FirebaseAuth.getInstance();
+                    //Log.d(TAG, "Auth: " + auth.getCurrentUser().toString());
                     if (auth.getCurrentUser() != null) {
                         //Go to main screen if already logged in
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
