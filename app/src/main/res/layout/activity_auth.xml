@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gourMain"
+    tools:context="umut.gourmatch.AuthActivity">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gourmatch_logo"
+            android:scaleType="fitCenter"
+            android:scaleX=".75"
+            android:scaleY=".75"
+            android:tint="@color/gourAuthLogo"
+            android:layout_gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/authEmailInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:focusable="true"
+            android:textColorHighlight="@color/gourHighlight"
+            android:textColorHint="@color/gourAuthHint"
+            android:layout_marginTop="46dp"
+            android:layout_below="@+id/imageView"
+            />
+
+        <EditText
+            android:id="@+id/authPassInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password"
+            android:focusable="true"
+            android:textColorHighlight="@color/gourHighlight"
+            android:textColorHint="@color/gourAuthHint"
+            android:layout_marginTop="46dp"
+            android:fontFamily=""
+            />
+
+        <Button
+            android:id="@+id/authSignInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="login"
+            android:text="@string/Login"
+            android:background="@color/gourButton"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/authPassReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/authPassReset"/>
+
+            <TextView
+                android:id="@+id/authCreateAcc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/authCreateAcc"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
