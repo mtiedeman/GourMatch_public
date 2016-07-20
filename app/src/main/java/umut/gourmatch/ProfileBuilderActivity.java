@@ -34,7 +34,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 
 
 
-    public void create_info(0):
-    Firebase
+    //public void create_info(0):
+    //Firebase
 
 }
