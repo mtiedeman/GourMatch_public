@@ -6,4 +6,5 @@
     <string name="authOr">OR</string>
     <string name="title_activity_create_account">CreateAccountActivity</string>
     <string name="createAcctTitle">Create Account</string>
+    <string name="SignUp">Sign Up!</string>
 </resources>

@@ -12,20 +12,107 @@
        android:layout_height="match_parent"
        android:orientation="vertical"
        android:layout_gravity="center_horizontal"
+       android:background="@color/titleBackground"
        >
 
-       <TextView
+
+       <ImageView
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:fontFamily=""
+           android:layout_height="@dimen/titleTextHeight"
+           android:src="@drawable/create_acct_title"
+           android:tint="@color/title"
            android:layout_gravity="center"
-           android:text="@string/createAcctTitle"
-           android:background="@color/createAcctTitleBackground"
-           android:textColor="@color/gourMain"
-           android:textAlignment="center"
-           android:textSize="@dimen/titleTextHeight"
            />
 
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="2dp"
+           android:background="@color/title">
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_gravity="center"
+           android:weightSum="2.5"
+           android:gravity="center">
+
+           <LinearLayout
+               android:layout_width="0px"
+               android:layout_height="match_parent"
+               android:layout_gravity="center"
+               android:layout_weight="1"
+               android:orientation="vertical"
+               android:weightSum="1">
+               <ImageView
+                   android:layout_width="fill_parent"
+                   android:layout_height="0px"
+                   android:id="@+id/fbLogo"
+                   android:layout_gravity="center_vertical"
+                   android:src="@drawable/fb_logo"
+                   android:scaleType="fitCenter"
+                   android:layout_weight=".5"
+                   android:clickable="true"
+                   android:onClick="fbLogin"
+                   />
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="0px"
+               android:layout_height="match_parent"
+               android:layout_gravity="center"
+               android:orientation="vertical"
+               android:layout_weight="1"
+               android:weightSum="1">
+               <ImageView
+                   android:layout_width="fill_parent"
+                   android:layout_height="0px"
+                   android:id="@+id/googleLogo"
+                   android:layout_gravity="center_vertical"
+                   android:src="@drawable/google_icon"
+                   android:scaleType="fitCenter"
+                   android:layout_weight=".5"
+                   android:clickable="true"
+                   android:onClick="googleLogin"
+                   />
+           </LinearLayout>
+       </LinearLayout>
+
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/CA_EmailInput"
+           android:hint="Email"
+           android:textColorHighlight="@color/gourHighlight"
+           android:textColorHint="@color/gourAuthHint"
+           />
+
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/CA_PassInput"
+           android:hint="Password"
+           android:textColorHighlight="@color/gourHighlight"
+           android:textColorHint="@color/gourAuthHint"
+           />
+
+       <EditText
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/CA_PassConfirmInput"
+           android:hint="Confirm Password"
+           android:textColorHighlight="@color/gourHighlight"
+           android:textColorHint="@color/gourAuthHint"
+           />
+
+       <Button
+           android:id="@+id/authSignInButton"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/SignUp"
+           android:background="@color/gourButton"
+           />
 
    </LinearLayout>
 
