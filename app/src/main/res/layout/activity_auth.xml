@@ -83,6 +83,7 @@
             android:textColorHint="@color/gourAuthHint"
             android:layout_below="@+id/imageView"
             android:layout_gravity="center"
+            android:inputType="textEmailAddress"
             />
 
         <EditText

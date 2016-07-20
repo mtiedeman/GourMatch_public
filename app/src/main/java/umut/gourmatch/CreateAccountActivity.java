@@ -101,4 +101,13 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
+    public void fbLogin(View view) {
+        Toast.makeText(CreateAccountActivity.this, "Facebook sign up not yet available.",
+        Toast.LENGTH_SHORT).show();
+    }
+
+    public void googleLogin(View view) {
+        Toast.makeText(CreateAccountActivity.this, "Google+ sign up not yet available.",
+                Toast.LENGTH_SHORT).show();
+    }
 }
