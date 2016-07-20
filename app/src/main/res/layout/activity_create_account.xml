@@ -87,7 +87,7 @@
            android:textColorHighlight="@color/gourHighlight"
            android:textColorHint="@color/gourAuthHint"
            android:focusable="true"
-           android:inputType="textPassword"
+           android:inputType="textEmailAddress"
            />
 
        <EditText
@@ -109,6 +109,7 @@
            android:textColorHighlight="@color/gourHighlight"
            android:textColorHint="@color/gourAuthHint"
            android:focusable="true"
+           android:inputType="textPassword"
            />
 
        <Button

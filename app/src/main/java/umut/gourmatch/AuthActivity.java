@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -143,8 +144,43 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void passReset() {
-        ResetPassDialogFragment dialog = new ResetPassDialogFragment();
-        dialog.setShowsDialog(true);
+        //new ResetPassDialogFragment();
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View dialogLayout = factory.inflate(R.layout.dialog_reset_password, null);
+        new AlertDialog.Builder(AuthActivity.this)
+                .setView(dialogLayout)
+                .setMessage(R.string.rest_pass_subtitle)
+                .setTitle(R.string.reset_pass_title)
+                .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        EditText emailText = (EditText) dialogLayout.findViewById(R.id.PR_email);
+                        String emailAddress= emailText.getText().toString();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        if(emailAddress != null  && !emailAddress.isEmpty()) {
+                            auth.sendPasswordResetEmail(emailAddress)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Email sent.");
+                                                Toast.makeText(AuthActivity.this, "Email sent.",
+                                                        Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(AuthActivity.this, "Entry cannot be blank.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     //Added from Firebase code
@@ -152,42 +188,6 @@ public class AuthActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    public static class ResetPassDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the Builder class for convenient dialog construction
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setView(R.layout.dialog_reset_password)
-                    .setMessage(R.string.rest_pass_subtitle)
-                    .setTitle(R.string.reset_pass_title)
-                    .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            EditText emailText = (EditText) getView().findViewById(R.id.PR_email);
-                            String emailAddress= emailText.getText().toString();
-                            FirebaseAuth auth = FirebaseAuth.getInstance();
-                            auth.sendPasswordResetEmail(emailAddress)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "Email sent.");
-                                            }
-                                            ResetPassDialogFragment.this.dismiss();
-                                        }
-                                    });
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            ResetPassDialogFragment.this.dismiss();
-                        }
-                    });
-            // Create the AlertDialog object and return it
-            return builder.create();
-        }
     }
 
     //Added from Firebase code
