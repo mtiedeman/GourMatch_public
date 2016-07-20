@@ -130,4 +130,10 @@ public class AuthActivity extends AppCompatActivity {
 
 
     }
+
+    public void fbLogin(View view) {
+    }
+
+    public void googleLogin(View view) {
+    }
 }
