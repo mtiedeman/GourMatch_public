@@ -1,5 +1,6 @@
 package umut.gourmatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -47,6 +48,9 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -101,4 +105,13 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
+    public void fbLogin(View view) {
+        Toast.makeText(CreateAccountActivity.this, "Facebook sign up not yet available.",
+        Toast.LENGTH_SHORT).show();
+    }
+
+    public void googleLogin(View view) {
+        Toast.makeText(CreateAccountActivity.this, "Google+ sign up not yet available.",
+                Toast.LENGTH_SHORT).show();
+    }
 }
