@@ -1,10 +1,15 @@
 package umut.gourmatch;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,34 +76,34 @@ public class AuthActivity extends AppCompatActivity {
         };
         //End firebase
 
-        // intitalize the facebook button
-        callbackManager = CallbackManager.Factory.create();
-        ImageView loginButton = (ImageView) view.findViewById(R.id.fbLogo);
-        ImageView.setReadPermissions("email", "public_profile");
-        ImageView.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d(TAG, "facebook:onCancel");
-                // [START_EXCLUDE]
-                updateUI(null);
-                // [END_EXCLUDE]
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.d(TAG, "facebook:onError","facebook:onError");
-                // [START_EXCLUDE]
-                updateUI(null);
-                // [END_EXCLUDE]
-            }
-        });
-        // end of facebook intialization
+//        // intitalize the facebook button
+//        callbackManager = CallbackManager.Factory.create();
+//        ImageView loginButton = (ImageView) view.findViewById(R.id.fbLogo);
+//        ImageView.setReadPermissions("email", "public_profile");
+//        ImageView.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+//                handleFacebookAccessToken(loginResult.getAccessToken());
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Log.d(TAG, "facebook:onCancel");
+//                // [START_EXCLUDE]
+//                updateUI(null);
+//                // [END_EXCLUDE]
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                Log.d(TAG, "facebook:onError","facebook:onError");
+//                // [START_EXCLUDE]
+//                updateUI(null);
+//                // [END_EXCLUDE]
+//            }
+//        });
+//        // end of facebook intialization
 
         //set up associations
         passText = (EditText) findViewById(R.id.authPassInput);
@@ -121,6 +126,7 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Add code to reset password
+                passReset();
             }
         });
 
@@ -128,9 +134,15 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Add code to create account
+                Intent intent = new Intent(AuthActivity.this, CreateAccountActivity.class);
+                startActivity(intent);
             }
         });
 
+
+    }
+
+    private void passReset() {
 
     }
 
@@ -139,6 +151,42 @@ public class AuthActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    public static class ResetPassDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setView(R.layout.dialog_reset_password)
+                    .setMessage(R.string.rest_pass_subtitle)
+                    .setTitle(R.string.reset_pass_title)
+                    .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            EditText emailText = (EditText) getView().findViewById(R.id.PR_email);
+                            String emailAddress= emailText.getText().toString();
+                            FirebaseAuth auth = FirebaseAuth.getInstance();
+                            auth.sendPasswordResetEmail(emailAddress)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "Email sent.");
+                                            }
+                                            ResetPassDialogFragment.this.dismiss();
+                                        }
+                                    });
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            ResetPassDialogFragment.this.dismiss();
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
     }
 
     //Added from Firebase code
@@ -183,41 +231,44 @@ public class AuthActivity extends AppCompatActivity {
 
 
     }
-    // [START auth_with_facebook]
-    private void handleFacebookAccessToken(AccessToken token) {
-        Log.d(TAG, "handleFacebookAccessToken:" + token);
-        // [START_EXCLUDE silent]
-        showProgressDialog();
-        // [END_EXCLUDE]
+//    // [START auth_with_facebook]
+//    private void handleFacebookAccessToken(AccessToken token) {
+//        Log.d(TAG, "handleFacebookAccessToken:" + token);
+//        // [START_EXCLUDE silent]
+//        showProgressDialog();
+//        // [END_EXCLUDE]
+//
+//        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+//        mAuth.signInWithCredential(credential)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+//
+//                        // If sign in fails, display a message to the user. If sign in succeeds
+//                        // the auth state listener will be notified and logic to handle the
+//                        // signed in user can be handled in the listener.
+//                        if (!task.isSuccessful()) {
+//                            Log.w(TAG, "signInWithCredential", task.getException());
+//                            Toast.makeText(FacebookLoginActivity.this, "Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                        else {
+//                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            startActivity(intent);
+//                            // [START_EXCLUDE]
+//                            //hideProgressDialog();
+//                            // [END_EXCLUDE]
+//                        }
+//                    }
+//                });
+//    }
+//    // [END auth_with_facebook]
 
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithCredential", task.getException());
-                            Toast.makeText(FacebookLoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            // [START_EXCLUDE]
-                            //hideProgressDialog();
-                            // [END_EXCLUDE]
-                        }
-                    }
-                });
-    }
-    // [END auth_with_facebook]
     public void fbLogin(View view) {
+        Toast.makeText(AuthActivity.this, "Facebook login not yet available.",
+                Toast.LENGTH_SHORT).show();
     }
 
     public void googleLogin(View view) {
