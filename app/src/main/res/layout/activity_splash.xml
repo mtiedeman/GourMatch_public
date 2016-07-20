@@ -23,7 +23,6 @@
         android:scaleX=".75"
         android:scaleY=".75"
         android:layout_gravity="center"
-        android:alpha="1"
         />
 
 
