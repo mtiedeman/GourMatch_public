@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.database.DataSnapshot;
@@ -26,8 +27,9 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
+        /*
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mBirthyear = (EditText)findViewById(R.id.birth);
@@ -58,11 +60,11 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        */
     }
 
-
-
     public void check_user(String username){
+        /*
         Boolean used = false;
         mDatabase.child("usernames").child(username).addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -79,7 +81,10 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                             Toast.makeText(NewPostActivity.this,
                                     "Error: could not fetch user.",
                                     Toast.LENGTH_SHORT).show();
+
                         }
+
+                        //uncomment above toast later
                     }
 
                     @Override
@@ -88,6 +93,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                     }
                 }
         );
+        */
     }
 
 }
