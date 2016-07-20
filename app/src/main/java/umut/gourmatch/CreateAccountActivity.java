@@ -11,7 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -33,7 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         passText = (EditText) findViewById(R.id.CA_PassInput);
         passConfirmText = (EditText) findViewById(R.id.CA_PassConfirmInput);
         emailText = (EditText) findViewById(R.id.CA_EmailInput);
-        signIn = (Button) findViewById(R.id.)
+        signIn = (Button) findViewById(R.id.CA_SignUpButton);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -49,6 +53,38 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             }
         };
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(passConfirmText.getText().toString().equals(passText.getText().toString())) {
+                    login();
+                } else {
+                    Toast.makeText(CreateAccountActivity.this, "Password doesn't match confirmed password.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void login() {
+        String email = emailText.getText().toString();
+        String password = passText.getText().toString();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
     }
 
     @Override
