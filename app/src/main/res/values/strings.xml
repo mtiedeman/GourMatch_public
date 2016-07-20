@@ -4,5 +4,6 @@
     <string name="authPassReset">Reset Password</string>
     <string name="authCreateAcc">Create Account</string>
     <string name="authOr">OR</string>
-    <string name="default_web_client_id">OR</string>
+    <string name="facebook_app_id">263380970701549</string>
+    <string name="title_activity_profile_builder">ProfileBuilderActivity</string>
 </resources>
