@@ -6,7 +6,7 @@
       android:id="@+id/splashid"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-    android:background="@color/umutMain"
+      android:background="@color/umutMain"
       android:orientation="vertical"
     >
 
