@@ -4,4 +4,5 @@
     <string name="authPassReset">Reset Password</string>
     <string name="authCreateAcc">Create Account</string>
     <string name="authOr">OR</string>
+    <string name="default_web_client_id">OR</string>
 </resources>
