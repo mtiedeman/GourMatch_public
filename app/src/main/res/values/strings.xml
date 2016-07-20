@@ -3,4 +3,5 @@
     <string name="Login">Sign In</string>
     <string name="authPassReset">Reset Password</string>
     <string name="authCreateAcc">Create Account</string>
+    <string name="authOr">OR</string>
 </resources>
