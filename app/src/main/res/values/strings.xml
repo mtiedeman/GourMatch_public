@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GourMatch</string>
+    <string name="Login">Sign In</string>
+    <string name="authPassReset">Reset Password</string>
+    <string name="authCreateAcc">Create Account</string>
 </resources>

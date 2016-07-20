@@ -8,5 +8,9 @@
     <color name="gourText">#5F0532</color>
     <color name="gourButton">#FF530D</color>
     <color name="gourBox">#E82C0C</color>
+    <color name="gourHyperlink">#0000ff</color>
+    <color name="gourAuthLogo">#ffffff</color>
+    <color name="gourAuthHint">#5F1205</color>
+    <color name="gourHighlight">#0ACB3B</color>
     <color name = "blue">#0000ff</color>
 </resources>
