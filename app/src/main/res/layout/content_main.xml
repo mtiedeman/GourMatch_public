@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="umut.gourmatch.MainActivity"
+    tools:showIn="@layout/app_bar_main"
+    android:background="@color/gourMain"
+    android:orientation="vertical"
+    android:weightsum="4"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:id="@+id/logo">
+
+
+            <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gourmatch_title"
+            android:scaleType="fitCenter"
+            android:scaleX=".75"
+            android:scaleY=".75"
+            android:tint="@color/gourAuthLogo"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:id="@+id/feedmebutton"
+        android:layout_below="@+id/logo">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/FeedMe"
+            android:onClick="sendMessage"
+            android:background="@color/gourMain" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:id="@+id/whatsGood"
+        android:layout_below="@+id/feedmebutton">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/WhatsGood"
+            android:onClick="sendMessage"
+            android:background="@color/gourMain" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:id="@+id/foodEvents"
+        android:layout_below="@+id/whatsGood">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/FoodEvents"
+            android:onClick="sendMessage"
+            android:background="@color/gourMain" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:id="@+id/restaurantWeek"
+        android:layout_below="@+id/foodEvents">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/RestaurantWeek"
+            android:onClick="sendMessage"
+            android:background="@color/gourMain" />
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

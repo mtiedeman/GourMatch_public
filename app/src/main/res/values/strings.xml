@@ -13,4 +13,15 @@
     <string name="reset">Reset</string>
     <string name="cancel">Cancel</string>
     <string name="rest_pass_subtitle">Email address:</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="FeedMe">FeedMe</string>
+    <string name="WhatsGood">What's Good?</string>
+    <string name="FoodEvents">Food Events</string>
+    <string name="RestaurantWeek">Restaurant of the Week</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
