@@ -7,7 +7,7 @@ import java.lang.reflect.Array;
  */
 public class User {
     // will be used to put stuff into the database about the user
-    private int birthYear;
+    private String birthYear;
     private String firstName;
     private String lastName;
     private String gender;
@@ -19,13 +19,37 @@ public class User {
 
     public User() {}
 
-    public User(int birthYear, String firstName, String lastName, String gender, Boolean[] allergies, Boolean[] dietary) {
+    public User(String birthYear, String firstName, String lastName, String gender, Boolean[] allergies, Boolean[] dietary, String username) {
         this.birthYear = birthYear;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.allergies = allergies;
         this.dietary = dietary;
+        this.username = username;
+    }
+    //calls
+
+    public String getUsername(){
+        return this.username;
+    }
+    public String getBirthYear(){
+        return this.birthYear;
+    }
+    public String getGender(){
+        return this.gender;
+    }
+    public Boolean[] getAllergies(){
+        return this.allergies;
+    }
+    public Boolean[] getDietary(){
+        return this.dietary;
+    }
+    public String getFirstName(){
+        return this.firstName;
+    }
+    public String getLastName(){
+        return this.lastName;
     }
 
 }
