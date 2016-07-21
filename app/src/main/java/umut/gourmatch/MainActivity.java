@@ -1,5 +1,7 @@
 package umut.gourmatch;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,18 +85,33 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.profile)
+        {
+            Context context = getApplicationContext();
+            CharSequence text = "Profile View coming soon!";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
+        else if (id == R.id.contact)
+        {
+            Intent intent = new Intent(getApplicationContext(),ContactActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.about)
+        {
+            Intent intent = new Intent(getApplicationContext(),AboutActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.signout)
+        {
+            //signs out
+            FirebaseAuth.getInstance().signOut();
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            //Goes to the authentication screen once signed out
+            Intent intent = new Intent(getApplicationContext(),AuthActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
