@@ -44,7 +44,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private String username;
     private Boolean used = false;
-    private String TAG = "Profile Error: ";
+    private String TAG = "ProfileBuilderActivity.java";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-                        Toast.makeText(ProfileBuilderActivity.this, "Failed to load allergies.",
+                        Toast.makeText(ProfileBuilderActivity.this, "Failed to pull allergies from database.",
                                 Toast.LENGTH_SHORT).show();
 
                     }
