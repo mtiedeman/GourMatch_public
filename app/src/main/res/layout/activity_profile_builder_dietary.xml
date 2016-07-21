@@ -34,10 +34,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:weightSum="2.5"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="3"
             android:gravity="center">
 
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/Back"
+                android:text="@string/backButton"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/Finish"
+                android:text="@string/finishButton"
+                />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
         </LinearLayout>
 
     </LinearLayout>
