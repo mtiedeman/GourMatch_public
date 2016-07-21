@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import umut.gourmatch.User;
 
@@ -43,14 +46,30 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     private final Firebase ref = new Firebase("https://gourmatch.firebaseio.com/users");
     private DatabaseReference mDatabase;
     private String username;
+    private String firstName;
+    private String lastName;
+    private int birthYear;
+    private int birthMonth;
+    private int birthDay;
     private Boolean used = false;
-    private String TAG = "Profile Error: ";
+    private String TAG = "ProfileBuilderActivity.java";
+//    private DatePicker datePicker;
+//    private EditText mUsername;
+//    private Button mNextButton;
+//    private EditText mFirstName;
+//    private EditText mLastName;
+    private FirebaseAuth mAuth;
+    private String userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        Firebase.setAndroidContext(this);
 
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("allergies").addListenerForSingleValueEvent(
@@ -66,7 +85,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-                        Toast.makeText(ProfileBuilderActivity.this, "Failed to load allergies.",
+                        Toast.makeText(ProfileBuilderActivity.this, "Failed to pull allergies from database.",
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -94,28 +113,9 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                     }
                 }
         );
+        create_basic();
 
-        mBirthyear = (EditText)findViewById(R.id.birth);
-        mUsername = (EditText)findViewById(R.id.username);
-        mBasicButton = (Button) findViewById(R.id.next);
 
-        mBasicButton.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View view){
-                        username = mUsername.getText().toString();
-                        String birth = mBirthyear.getText().toString();
-                        check_user();
-                        if( used || birth.matches("") ){
-                            Log.e(TAG, "User " + userId + " is unexpectedly null");
-                            Toast.makeText(ProfileBuilderActivity.this,
-                                    "Error: Username is taken.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            // runn food allergies
-                        }
-                    }
-                });
 /*
         mAllergyButtonL = (Button) findViewById(R.id.next);
         mAllergyButtonR = (Button) findViewById(R.id.next);
@@ -139,18 +139,6 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 
         )
 */
-
-        setContentView(R.layout.activity_profile_builder);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
 
@@ -184,28 +172,28 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     }
 
     public void create_allergies(){
-        for( int i = 0; i < allergy_names.size(); i++){
-            CheckBox myCheck = new CheckBox(this);
-            myCheck.setText(allergy_names.get(i));
-            myCheck.setId(i);
-            LinearLayout allergy_layout =  (LinearLayout) findViewById(R.id.allergylayout);
-            LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            allergy_layout.addView(myCheck, lp);
-            myCheck.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    CheckBox b = (CheckBox) view;
-                    int allergy_id = b.getId() - 1;
-                    if(allergies[allergy_id]){
-                        allergies[allergy_id] = false;
-                    }
-                    else{
-                        allergies[allergy_id] = true;
-                    }
-                }
-
-            });
-        }
+//        for( int i = 0; i < allergy_names.size(); i++){
+//            CheckBox myCheck = new CheckBox(this);
+//            myCheck.setText(allergy_names.get(i));
+//            myCheck.setId(i);
+//            LinearLayout allergy_layout;// =  (LinearLayout) findViewById(R.id.);
+//            LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+//            //allergy_layout.addView(myCheck, lp);
+//            myCheck.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    CheckBox b = (CheckBox) view;
+//                    int allergy_id = b.getId() - 1;
+//                    if(allergies[allergy_id]){
+//                        allergies[allergy_id] = false;
+//                    }
+//                    else{
+//                        allergies[allergy_id] = true;
+//                    }
+//                }
+//
+//            });
+//        }
     }
 
     public void create_diets(){
@@ -219,20 +207,67 @@ public class ProfileBuilderActivity extends AppCompatActivity {
             btn.setId(i + 9);
             group.addView(btn);
         }
-        ((ViewGroup) findViewById(R.id.radiogroup)).addView(group);
+//        ((ViewGroup) findViewById(R.id.radiogroup)).addView(group);
 
 
     }
 
+    public void create_basic() {
+        setContentView(R.layout.activity_profile_builder_basic);
+            DatePicker datePicker;
+            final EditText mUsername = (EditText)findViewById(R.id.basic_username);;
+            Button mNextButton;
+            EditText mFirstName;
+            EditText mLastName;
+        //mBirthyear = (EditText)findViewById(R.id.birth);
+        datePicker = (DatePicker) findViewById(R.id.birthdayPick);
+        mFirstName = (EditText)findViewById(R.id.basic_firstname);
+        mLastName = (EditText)findViewById(R.id.basic_lastname);
+        mNextButton = (Button) findViewById(R.id.Next);
+        if(username != null) {
+            mUsername.setText(username);
+            mFirstName.setText(firstName);
+            mLastName.setText(lastName);
+            datePicker.init(birthYear, birthMonth, birthDay, null);
+        } else {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            datePicker.init(year, month, day, null);
+        }
+
+//        mNextButton.setOnClickListener(
+//                new View.OnClickListener(){
+//                    public void onClick(View view){
+//                        if(userId.isEmpty()) {
+//                            Log.e(TAG, "User ID is unexpectedly null");
+//                            Toast.makeText(ProfileBuilderActivity.this,
+//                                    "Error: NO USER ID.",
+//                                    Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            username = mUsername.getText().toString();
+//                            check_user();
+//                            if (!used) {
+//                                //Go to food allergies
+//                                create_allergies();
+//                            }
+//                        }
+//                    }
+//                });
+    }
+
     public void add_user() {
-        int id_num = ((RadioGroup) findViewById(R.id.radiogroup)).getCheckedRadioButtonId() - 9;
-        diets[id_num] = true;
-        User user = new User(mBirthyear.getText().toString(), mFirstname, mLastName, mGender, allergies, diets, username);
+//        int id_num = ((RadioGroup) findViewById(R.id.radiogroup)).getCheckedRadioButtonId() - 9;
+//        diets[id_num] = true;
+//        User user = new User(mBirthyear.getText().toString(), mFirstname, mLastName, mGender, allergies, diets, username);
 
     }
     // on the last click
 
-    public User(String birthYear, String firstName, String lastName, String gender, Boolean[] allergies, Boolean[] dietary)
-
-
-    }
+//    public User(String birthYear, String firstName, String lastName, String gender, Boolean[] allergies, Boolean[] dietary)
+//
+//
+//
+}

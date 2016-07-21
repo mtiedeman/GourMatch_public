@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity
@@ -20,6 +21,9 @@ public class SplashActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        Firebase.setAndroidContext(this);
+        //To remove
+        FirebaseAuth.getInstance().signOut();
 
 //        //background image
 //        ImageView myImage = (ImageView) findViewById(R.id.imageid);

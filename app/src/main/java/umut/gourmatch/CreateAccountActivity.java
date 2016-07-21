@@ -48,7 +48,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
+//                    Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+                    Toast.makeText(CreateAccountActivity.this, "Creation successful. Skipping profile builder.",
+                            Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 } else {
