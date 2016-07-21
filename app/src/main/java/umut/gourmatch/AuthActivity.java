@@ -222,9 +222,11 @@ public class AuthActivity extends AppCompatActivity {
                                 Toast.makeText(AuthActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                            /*    Intent intent = new Intent(getApplicationContext(), MA.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
+                                startActivity(intent); */
+
                             }
                         }
                     });
@@ -255,7 +257,7 @@ public class AuthActivity extends AppCompatActivity {
 //                                    Toast.LENGTH_SHORT).show();
 //                        }
 //                        else {
-//                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                            Intent intent = new Intent(getApplicationContext(), MA.class);
 //                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                            startActivity(intent);
 //                            // [START_EXCLUDE]

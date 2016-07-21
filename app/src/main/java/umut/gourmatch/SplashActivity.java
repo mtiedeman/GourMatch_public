@@ -42,9 +42,9 @@ public class SplashActivity extends AppCompatActivity
                     //Log.d(TAG, "Auth: " + auth.getCurrentUser().toString());
                     if (auth.getCurrentUser() != null) {
                         //Go to main screen if already logged in
-                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    /*    Intent intent = new Intent(getApplicationContext(),MA.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+                        startActivity(intent); */
                     } else {
                         //Go to authentication screen if not logged in
                         Intent intent = new Intent(getApplicationContext(),AuthActivity.class);
