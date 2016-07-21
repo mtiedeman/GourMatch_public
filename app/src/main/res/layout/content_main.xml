@@ -9,7 +9,6 @@
     tools:showIn="@layout/app_bar_main"
     android:background="@color/gourMain"
     android:orientation="vertical"
-    android:weightsum="4"
     >
 
     <LinearLayout

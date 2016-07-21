@@ -51,8 +51,8 @@ public class CreateAccountActivity extends AppCompatActivity {
 //                    Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    startActivity(intent);
-                    Toast.makeText(CreateAccountActivity.this, "Creation successful. Skipping profile builder.",
-                            Toast.LENGTH_LONG).show();
+//                    Toast.makeText(CreateAccountActivity.this, "Creation successful. Skipping profile builder.",
+//                            Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
