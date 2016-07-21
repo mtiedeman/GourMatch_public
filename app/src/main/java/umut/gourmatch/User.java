@@ -28,6 +28,7 @@ public class User {
         this.dietary = dietary;
         this.username = username;
     }
+    //calls
 
     public String getUsername(){
         return this.username;
