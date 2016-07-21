@@ -40,7 +40,6 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     // lacto, lacto_ovo, ovo, pesce, vegan
     private Boolean[] allergies = new Boolean[8];
     private Boolean[] diets = new Boolean[5];
-    private final Firebase ref = new Firebase("https://gourmatch.firebaseio.com/users");
     private DatabaseReference mDatabase;
     private String username;
     private Boolean used = false;
@@ -235,4 +234,4 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     public User(String birthYear, String firstName, String lastName, String gender, Boolean[] allergies, Boolean[] dietary)
 
 
-    }
+}
