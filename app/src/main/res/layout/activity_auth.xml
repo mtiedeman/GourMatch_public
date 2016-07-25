@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,15 +34,15 @@
             android:weightSum="4"
             android:gravity="center">
 
-                <ImageView
+                <com.facebook.login.widget.LoginButton
                     android:layout_width="fill_parent"
+                    android:src="@drawable/fb_logo"
+                    android:id="@+id/fbLogo"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/fb_logo"
                     android:scaleType="fitCenter"
                     android:layout_weight="2"
                     android:clickable="true"
-                    android:onClick="fbLogin"
                     />
 
                 <ImageView
@@ -52,6 +54,7 @@
                     android:layout_weight="2"
                     android:clickable="true"
                     android:onClick="googleLogin"
+                    android:id="@+id/googleLogo"
                     />
 
         </LinearLayout>
