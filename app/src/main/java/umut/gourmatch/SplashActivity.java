@@ -5,12 +5,10 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crash.FirebaseCrash;
 
 public class SplashActivity extends AppCompatActivity
 {
@@ -21,20 +19,18 @@ public class SplashActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        //Enables the use of Firebase
         Firebase.setAndroidContext(this);
-        //To remove
-        FirebaseAuth.getInstance().signOut();
 
-//        //background image
-//        ImageView myImage = (ImageView) findViewById(R.id.imageid);
-
-        //pause for 1 second(s) before checking whether the user is logged in
+        //pause for .5 second(s) before checking whether the user is logged in
+        FirebaseCrash.log("Splash: pause");
         Thread timerThread = new Thread(){
             public void run()
             {
                 try
                 {
-                    sleep(1000);
+                    sleep(500);
                 }
                 catch(InterruptedException e)
                 {
@@ -42,15 +38,21 @@ public class SplashActivity extends AppCompatActivity
                 }
                 finally
                 {
+                    FirebaseCrash.log("Splash: getting FirebaseAuth instance");
                     FirebaseAuth auth = FirebaseAuth.getInstance();
-                    //Log.d(TAG, "Auth: " + auth.getCurrentUser().toString());
+
+                    FirebaseCrash.log("Splash: checking authentication");
                     if (auth.getCurrentUser() != null) {
+                        FirebaseCrash.log("Splash: user already logged in; go to Main");
                         //Go to main screen if already logged in
-                    /*    Intent intent = new Intent(getApplicationContext(),MA.class);
+                        Log.d(TAG, "User is already logged in.");
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent); */
+                        startActivity(intent);
                     } else {
+                        FirebaseCrash.log("Splash: user not logged in; go to Auth");
                         //Go to authentication screen if not logged in
+                        Log.d(TAG, "User is not logged in.");
                         Intent intent = new Intent(getApplicationContext(),AuthActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

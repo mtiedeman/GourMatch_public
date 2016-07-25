@@ -14,11 +14,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -29,10 +40,19 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText passConfirmText;
     private EditText emailText;
     private Button signIn;
+    private LoginButton fbLogo;
+    private SignInButton googleLogo;
+    private CallbackManager callbackManager;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Facebook auth
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
         setContentView(R.layout.activity_create_account);
 
         passText = (EditText) findViewById(R.id.CA_PassInput);
@@ -48,14 +68,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-//                    Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-//                    Toast.makeText(CreateAccountActivity.this, "Creation successful. Skipping profile builder.",
-//                            Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+//                    Toast.makeText(CreateAccountActivity.this, "Creation successful. Skipping profile builder.",
+//                            Toast.LENGTH_LONG).show();
+//                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -65,8 +85,20 @@ public class CreateAccountActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(emailText.getText().toString().isEmpty()) {
+                    Toast.makeText(CreateAccountActivity.this, "No email address entered.",
+                            Toast.LENGTH_SHORT).show();
+                } else
+                if(passText.getText().toString().isEmpty()) {
+                    Toast.makeText(CreateAccountActivity.this, "No password entered.",
+                            Toast.LENGTH_SHORT).show();
+                } else
+                if(passConfirmText.getText().toString().isEmpty()) {
+                    Toast.makeText(CreateAccountActivity.this, "Please confirm password.",
+                            Toast.LENGTH_SHORT).show();
+                } else
                 if(passConfirmText.getText().toString().equals(passText.getText().toString())) {
-                    login();
+                    login(emailText.getText().toString(), passText.getText().toString());
                 } else {
                     Toast.makeText(CreateAccountActivity.this, "Password doesn't match confirmed password.",
                             Toast.LENGTH_SHORT).show();
@@ -75,9 +107,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
-    private void login() {
-        String email = emailText.getText().toString();
-        String password = passText.getText().toString();
+    private void login(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -108,15 +138,5 @@ public class CreateAccountActivity extends AppCompatActivity {
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
-    }
-
-    public void fbLogin(View view) {
-        Toast.makeText(CreateAccountActivity.this, "Facebook sign up not yet available.",
-        Toast.LENGTH_SHORT).show();
-    }
-
-    public void googleLogin(View view) {
-        Toast.makeText(CreateAccountActivity.this, "Google+ sign up not yet available.",
-                Toast.LENGTH_SHORT).show();
     }
 }
