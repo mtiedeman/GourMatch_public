@@ -3,10 +3,12 @@ package umut.gourmatch;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -145,6 +147,14 @@ public class AuthActivity extends AppCompatActivity implements
         createAcc = (TextView) findViewById(R.id.authCreateAcc);
         logIn = (Button) findViewById(R.id.authSignInButton);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
+        passText.setMaxWidth((int)(width*.8));
+        emailText.setMaxWidth((int)(width*.8));
 
         //Listeners
         logIn.setOnClickListener(new View.OnClickListener() {
