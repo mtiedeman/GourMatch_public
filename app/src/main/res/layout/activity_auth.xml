@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,8 +10,9 @@
 
     <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
+    android:layout_height="match_parent"
+        android:weightSum="10"
+        android:layout_gravity="center_horizontal"
     android:orientation="vertical"
     >
 
@@ -21,55 +24,42 @@
             android:scaleX=".75"
             android:scaleY=".75"
             android:tint="@color/gourAuthLogo"
-            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:weightSum="4"
-            android:gravity="center">
-
-                <ImageView
-                    android:layout_width="fill_parent"
+                <com.facebook.login.widget.LoginButton
+                    android:layout_width="wrap_content"
+                    android:id="@+id/fbLogo"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/fb_logo"
                     android:scaleType="fitCenter"
-                    android:layout_weight="2"
                     android:clickable="true"
-                    android:onClick="fbLogin"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
                     />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/fab_margin" />
 
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/google_icon"
-                    android:scaleType="fitCenter"
-                    android:layout_weight="2"
-                    android:clickable="true"
-                    android:onClick="googleLogin"
-                    />
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/googleLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                />
 
-        </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:weightSum="1"
-        android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/authOr"
-                android:layout_gravity="center"/>
-    </LinearLayout>
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="@dimen/fab_margin"/>
 
         <EditText
             android:id="@+id/authEmailInput"
@@ -79,9 +69,10 @@
             android:focusable="true"
             android:textColorHighlight="@color/gourHighlight"
             android:textColorHint="@color/gourAuthHint"
-            android:layout_below="@+id/imageView"
             android:layout_gravity="center"
             android:inputType="textEmailAddress"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="true"
             />
 
         <EditText
@@ -93,8 +84,9 @@
             android:focusable="true"
             android:textColorHighlight="@color/gourHighlight"
             android:textColorHint="@color/gourAuthHint"
-            android:fontFamily=""
             android:layout_gravity="center"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="true"
             />
 
         <Button
@@ -104,42 +96,40 @@
             android:text="@string/Login"
             android:background="@color/gourButton"
             android:layout_gravity="center"
+            android:radius="30dp"
+            android:layout_weight="1"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_gravity="center"
+            android:layout_weight="1"
+
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/authPassReset"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/authPassReset"
                 android:clickable="true"
-                android:layout_weight=".1"
+                android:layout_weight="1"
                 android:layout_gravity="center"
-                />
-
-            <TextView
-                android:id="@+id/space"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:clickable="true"
-                android:layout_weight="1.75"
-                android:layout_gravity="center"
+                android:gravity="center"
                 />
 
             <TextView
                 android:id="@+id/authCreateAcc"
-                android:layout_width="1dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/authCreateAcc"
                 android:layout_gravity="center"
                 android:clickable="true"
                 android:layout_weight="1"
+                android:gravity="center"
+
                 />
 
         </LinearLayout>
@@ -148,4 +138,4 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>
