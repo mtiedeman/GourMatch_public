@@ -19,6 +19,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -53,9 +58,9 @@ public class CreateAccountActivity extends AppCompatActivity {
 //                    startActivity(intent);
 //                    Toast.makeText(CreateAccountActivity.this, "Creation successful. Skipping profile builder.",
 //                            Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -65,6 +70,18 @@ public class CreateAccountActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(emailText.getText().toString().isEmpty()) {
+                    Toast.makeText(CreateAccountActivity.this, "No email address entered.",
+                            Toast.LENGTH_SHORT).show();
+                } else
+                if(passText.getText().toString().isEmpty()) {
+                    Toast.makeText(CreateAccountActivity.this, "No password entered.",
+                            Toast.LENGTH_SHORT).show();
+                } else
+                if(passConfirmText.getText().toString().isEmpty()) {
+                    Toast.makeText(CreateAccountActivity.this, "Please confirm password.",
+                            Toast.LENGTH_SHORT).show();
+                } else
                 if(passConfirmText.getText().toString().equals(passText.getText().toString())) {
                     login();
                 } else {
