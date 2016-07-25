@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.firebase.client.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.crash.FirebaseCrash;
 
 public class SplashActivity extends AppCompatActivity
 {
@@ -23,6 +24,7 @@ public class SplashActivity extends AppCompatActivity
         Firebase.setAndroidContext(this);
 
         //pause for .5 second(s) before checking whether the user is logged in
+        FirebaseCrash.log("Splash: pause");
         Thread timerThread = new Thread(){
             public void run()
             {
@@ -36,15 +38,19 @@ public class SplashActivity extends AppCompatActivity
                 }
                 finally
                 {
+                    FirebaseCrash.log("Splash: getting FirebaseAuth instance");
                     FirebaseAuth auth = FirebaseAuth.getInstance();
 
+                    FirebaseCrash.log("Splash: checking authentication");
                     if (auth.getCurrentUser() != null) {
+                        FirebaseCrash.log("Splash: user already logged in; go to Main");
                         //Go to main screen if already logged in
                         Log.d(TAG, "User is already logged in.");
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     } else {
+                        FirebaseCrash.log("Splash: user not logged in; go to Auth");
                         //Go to authentication screen if not logged in
                         Log.d(TAG, "User is not logged in.");
                         Intent intent = new Intent(getApplicationContext(),AuthActivity.class);
