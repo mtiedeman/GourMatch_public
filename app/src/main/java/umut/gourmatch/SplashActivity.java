@@ -76,7 +76,6 @@ public class SplashActivity extends AppCompatActivity
     }
 
     private void checkLogin() {
-        final boolean[] temp = new boolean[1];
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
                 new ValueEventListener() {

@@ -355,37 +355,30 @@ public class AuthActivity extends AppCompatActivity implements
     }
 
     private void checkLogoLogin() {
-        boolean first = false;
-        final boolean[] temp = new boolean[1];
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(
+       DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
                 new ValueEventListener() {
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "User has not created their account.");
-                        temp[0] = false;
+
+                        if(!dataSnapshot.hasChild("username")) {
+                            Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        temp[0] = true;
-                        Log.d(TAG, "User has created their account.");
+                        //Throw up a toast
                     }
                 }
         );
-        first = temp[0];
-        Log.d(TAG, "First: " + first);
-        if(!first) {
-            Log.d(TAG, "Going to main.");
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        } else {
-            Log.d(TAG, "Going to profile builder.");
-            Intent intent = new Intent(getApplicationContext(), ProfileBuilderActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
     }
 
     @Override
