@@ -68,14 +68,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-//                    Toast.makeText(CreateAccountActivity.this, "Creation successful. Skipping profile builder.",
-//                            Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
+                    checkLogin();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -124,6 +117,33 @@ public class CreateAccountActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void checkLogin() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        if(!dataSnapshot.hasChild("username")) {
+                            Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //Throw up a toast
+                    }
+                }
+        );
     }
 
     @Override
