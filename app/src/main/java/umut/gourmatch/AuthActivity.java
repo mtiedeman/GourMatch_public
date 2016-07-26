@@ -82,6 +82,7 @@ public class AuthActivity extends AppCompatActivity implements
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    checkLogin();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -261,13 +262,14 @@ public class AuthActivity extends AppCompatActivity implements
                                 Log.w(TAG, "signInWithEmail", task.getException());
                                 Toast.makeText(AuthActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                            } else {
-
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-
                             }
+//                            else {
+//
+//                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                startActivity(intent);
+//
+//                            }
                         }
                     });
         }
@@ -292,7 +294,7 @@ public class AuthActivity extends AppCompatActivity implements
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            checkLogoLogin();
+                            checkLogin();
                             // [START_EXCLUDE]
                             //hideProgressDialog();
                             // [END_EXCLUDE]
@@ -346,15 +348,16 @@ public class AuthActivity extends AppCompatActivity implements
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(AuthActivity.this, "Google authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d(TAG, "Google auth successful. Checking user...");
-                            checkLogoLogin();
                         }
+//                        else {
+//                            Log.d(TAG, "Google auth successful. Checking user...");
+//                            checkLogin();
+//                        }
                     }
                 });
     }
 
-    private void checkLogoLogin() {
+    private void checkLogin() {
        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
                 new ValueEventListener() {
