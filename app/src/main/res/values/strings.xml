@@ -41,4 +41,6 @@
   <string name="contact">Contact</string>
    <string name="about">About</string>
 <string name="sign_out">Sign Out</string>
+    <string name="birthdayPrompt">Birthday</string>
+    <string name="genderPrompt">Gender</string>
 </resources>
