@@ -330,7 +330,7 @@ public class AuthActivity extends AppCompatActivity implements
         }
     }
 
-    //Addded majority from firebase
+    //Added majority from firebase
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
