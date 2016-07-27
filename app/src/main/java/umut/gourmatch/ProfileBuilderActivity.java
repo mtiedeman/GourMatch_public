@@ -48,7 +48,8 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     private ArrayList<String> diet_info = new ArrayList<String>();
     // lacto, lacto_ovo, ovo, pesce, vegan
     private ArrayList<Boolean> allergies = new ArrayList<Boolean>();
-    private ArrayList<Boolean> diets = new ArrayList<Boolean>();
+    private String diet;
+    private int dietIndex = -1;
     private final Firebase ref = new Firebase("https://gourmatch.firebaseio.com/users");
     private DatabaseReference mDatabase;
     private String username;
@@ -107,7 +108,6 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                             String allergy_name = diet.getKey();
                             diet_info.add(info);
                             diet_names.add(allergy_name);
-                            diets.add(false);
                         }
                     }
 
@@ -182,7 +182,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     }
 
     private void create_diets(){
-        setContentView(R.layout.activity_profile_builder_allergies);
+        setContentView(R.layout.activity_profile_builder_dietary);
         ScrollView sv = new ScrollView(this);
 
         Button mFinishButton = (Button) findViewById(R.id.Finish);
@@ -198,10 +198,39 @@ public class ProfileBuilderActivity extends AppCompatActivity {
             String info = diet_info.get(i);
             RadioButton btn = new RadioButton(this);
             btn.setText(diet_name + ": " + info);
-            btn.setId(i + 9);
+            btn.setId(i);
             group.addView(btn);
         }
-//        ((ViewGroup) findViewById(R.id.radiogroup)).addView(group);
+        if(dietIndex != -1) {
+            group.check(dietIndex);
+        }
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                dietIndex = i;
+                diet = diet_names.get(i);
+            }
+        });
+        ll.addView(group);
+        scrollView.addView(ll);
+
+        mFinishButton.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View view){
+                        //Store data and move on
+                        finishProfile();
+                    }
+                });
+
+        mBackButton.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View view){
+                        create_allergies();
+                    }
+                });
+    }
+
+    private void finishProfile() {
 
     }
 
