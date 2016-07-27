@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -51,6 +52,8 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     private int birthYear;
     private int birthMonth;
     private int birthDay;
+    private int genderIndex;
+    private String gender;
     private Boolean used = false;
     private String TAG = "ProfileBuilderActivity.java";
 //    private DatePicker datePicker;
@@ -60,13 +63,12 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 //    private EditText mLastName;
     private FirebaseAuth mAuth;
     private String userId;
+    private boolean cont;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        Firebase.setAndroidContext(this);
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
@@ -152,12 +154,14 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                         if(!dataSnapshot.exists()){
                             Log.e(TAG, "User " + username + " is taken");
                             Toast.makeText(ProfileBuilderActivity.this,
-                                    "Error: Username is taken.",
+                                    "Username is taken, please choose another.",
                                     Toast.LENGTH_SHORT).show();
                             used = false;
+                            cont = true;
                         }
                         else{
                             used = true;
+                            cont = true;
                         }
 
                     }
@@ -169,6 +173,74 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                 }
         );
 
+    }
+
+    public RadioGroup create_diets(){
+        RadioGroup group = new RadioGroup(this);
+        group.setOrientation(RadioGroup.VERTICAL);
+        for(int i = 0; i < diet_names.size(); i++) {
+            String diet_name = diet_names.get(i);
+            String info = diet_info.get(i);
+            RadioButton btn = new RadioButton(this);
+            btn.setText(diet_name + ": " + info);
+            btn.setId(i + 9);
+            group.addView(btn);
+        }
+//        ((ViewGroup) findViewById(R.id.radiogroup)).addView(group);
+
+        return group;
+    }
+
+    public void create_basic() {
+        setContentView(R.layout.activity_profile_builder_basic);
+            final DatePicker datePicker = (DatePicker) findViewById(R.id.birthdayPick);
+            final EditText mUsername = (EditText)findViewById(R.id.basic_username);;
+            Button mNextButton = (Button) findViewById(R.id.Next);
+            final EditText mFirstName = (EditText)findViewById(R.id.basic_firstname);
+            final EditText mLastName = (EditText)findViewById(R.id.basic_lastname);
+            final Spinner mGender = (Spinner) findViewById(R.id.gender);
+        if(username != null) {
+            mUsername.setText(username);
+            mFirstName.setText(firstName);
+            mLastName.setText(lastName);
+            datePicker.init(birthYear, birthMonth, birthDay, null);
+            mGender.setSelection(genderIndex);
+        } else {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            datePicker.init(year, month, day, null);
+        }
+
+        mNextButton.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View view){
+                        if(userId.isEmpty()) {
+                            Toast.makeText(ProfileBuilderActivity.this,
+                                    "Please enter a username.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            username = mUsername.getText().toString();
+                            cont = false;
+                            check_user();
+                            while(!cont) {}
+                            if (!used) {
+                                //collect info
+                                username = mUsername.getText().toString();
+                                firstName = mFirstName.getText().toString();
+                                lastName = mLastName.getText().toString();
+                                birthDay = datePicker.getDayOfMonth();
+                                birthMonth = datePicker.getMonth();
+                                birthYear = datePicker.getYear();
+                                gender = (String) mGender.getSelectedItem();
+                                genderIndex = mGender.getSelectedItemPosition();
+                                //Go to food allergies
+                                create_allergies();
+                            }
+                        }
+                    }
+                });
     }
 
     public void create_allergies(){
@@ -194,68 +266,6 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 //
 //            });
 //        }
-    }
-
-    public void create_diets(){
-        RadioGroup group = new RadioGroup(this);
-        group.setOrientation(RadioGroup.VERTICAL);
-        for(int i = 0; i < diet_names.size(); i++) {
-            String diet_name = diet_names.get(i);
-            String info = diet_info.get(i);
-            RadioButton btn = new RadioButton(this);
-            btn.setText(diet_name + ": " + info);
-            btn.setId(i + 9);
-            group.addView(btn);
-        }
-//        ((ViewGroup) findViewById(R.id.radiogroup)).addView(group);
-
-
-    }
-
-    public void create_basic() {
-        setContentView(R.layout.activity_profile_builder_basic);
-            DatePicker datePicker;
-            final EditText mUsername = (EditText)findViewById(R.id.basic_username);;
-            Button mNextButton;
-            EditText mFirstName;
-            EditText mLastName;
-        //mBirthyear = (EditText)findViewById(R.id.birth);
-        datePicker = (DatePicker) findViewById(R.id.birthdayPick);
-        mFirstName = (EditText)findViewById(R.id.basic_firstname);
-        mLastName = (EditText)findViewById(R.id.basic_lastname);
-        mNextButton = (Button) findViewById(R.id.Next);
-        if(username != null) {
-            mUsername.setText(username);
-            mFirstName.setText(firstName);
-            mLastName.setText(lastName);
-            datePicker.init(birthYear, birthMonth, birthDay, null);
-        } else {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            datePicker.init(year, month, day, null);
-        }
-
-//        mNextButton.setOnClickListener(
-//                new View.OnClickListener(){
-//                    public void onClick(View view){
-//                        if(userId.isEmpty()) {
-//                            Log.e(TAG, "User ID is unexpectedly null");
-//                            Toast.makeText(ProfileBuilderActivity.this,
-//                                    "Error: NO USER ID.",
-//                                    Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            username = mUsername.getText().toString();
-//                            check_user();
-//                            if (!used) {
-//                                //Go to food allergies
-//                                create_allergies();
-//                            }
-//                        }
-//                    }
-//                });
     }
 
     public void add_user() {
