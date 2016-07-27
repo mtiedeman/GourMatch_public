@@ -32,32 +32,57 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
-            android:weightSum="3"
-            android:gravity="center">
+            android:weightSum="10"
+            android:background="@color/titleBackground"
+            >
 
-            <Button
-                android:layout_width="0dp"
+            <ScrollView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/Back"
-                android:text="@string/backButton"
-                />
-            <Button
-                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:layout_gravity="center"
+                android:id="@+id/List">
+            </ScrollView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:id="@+id/Finish"
-                android:text="@string/finishButton"
-                />
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                />
+                android:weightSum="3">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/Back"
+                    android:text="@string/backButton"
+                    android:layout_gravity="center"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/Finish"
+                    android:text="@string/finishButton"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
+
 
     </LinearLayout>
 
