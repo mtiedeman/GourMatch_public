@@ -1,6 +1,7 @@
 package umut.gourmatch;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,15 +10,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -42,8 +47,8 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     private ArrayList<String> diet_names = new ArrayList<String>();
     private ArrayList<String> diet_info = new ArrayList<String>();
     // lacto, lacto_ovo, ovo, pesce, vegan
-    private Boolean[] allergies = new Boolean[8];
-    private Boolean[] diets = new Boolean[5];
+    private ArrayList<Boolean> allergies = new ArrayList<Boolean>();
+    private ArrayList<Boolean> diets = new ArrayList<Boolean>();
     private final Firebase ref = new Firebase("https://gourmatch.firebaseio.com/users");
     private DatabaseReference mDatabase;
     private String username;
@@ -54,7 +59,6 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     private int birthDay;
     private int genderIndex;
     private String gender;
-    private Boolean used = false;
     private String TAG = "ProfileBuilderActivity.java";
 //    private DatePicker datePicker;
 //    private EditText mUsername;
@@ -63,7 +67,6 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 //    private EditText mLastName;
     private FirebaseAuth mAuth;
     private String userId;
-    private boolean cont;
 
 
     @Override
@@ -81,6 +84,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                         for(DataSnapshot allergy : dataSnapshot.getChildren()){
                             String allergy_name = allergy.getKey();
                             allergy_names.add(allergy_name);
+                            allergies.add(false);
                         }
                     }
 
@@ -103,6 +107,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                             String allergy_name = diet.getKey();
                             diet_info.add(info);
                             diet_names.add(allergy_name);
+                            diets.add(false);
                         }
                     }
 
@@ -146,28 +151,29 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 
 
     public void check_user(){
-        mDatabase.child("usernames").child(username).addListenerForSingleValueEvent(
+        mDatabase.child("usernames").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "Got data");
                         //get username
-                        if(!dataSnapshot.exists()){
+                        if(dataSnapshot.hasChild(username)){
                             Log.e(TAG, "User " + username + " is taken");
                             Toast.makeText(ProfileBuilderActivity.this,
                                     "Username is taken, please choose another.",
                                     Toast.LENGTH_SHORT).show();
-                            used = false;
-                            cont = true;
                         }
                         else{
-                            used = true;
-                            cont = true;
+                            Log.d(TAG, "Username not taken.");
+                            saveBasic();
+                            create_allergies();
                         }
 
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "Username error");
 
                     }
                 }
@@ -175,7 +181,16 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 
     }
 
-    public RadioGroup create_diets(){
+    private void create_diets(){
+        setContentView(R.layout.activity_profile_builder_allergies);
+        ScrollView sv = new ScrollView(this);
+
+        Button mFinishButton = (Button) findViewById(R.id.Finish);
+        Button mBackButton = (Button) findViewById(R.id.Back);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.List);
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+
         RadioGroup group = new RadioGroup(this);
         group.setOrientation(RadioGroup.VERTICAL);
         for(int i = 0; i < diet_names.size(); i++) {
@@ -188,13 +203,12 @@ public class ProfileBuilderActivity extends AppCompatActivity {
         }
 //        ((ViewGroup) findViewById(R.id.radiogroup)).addView(group);
 
-        return group;
     }
 
     public void create_basic() {
         setContentView(R.layout.activity_profile_builder_basic);
             final DatePicker datePicker = (DatePicker) findViewById(R.id.birthdayPick);
-            final EditText mUsername = (EditText)findViewById(R.id.basic_username);;
+            final EditText mUsername = (EditText)findViewById(R.id.basic_username);
             Button mNextButton = (Button) findViewById(R.id.Next);
             final EditText mFirstName = (EditText)findViewById(R.id.basic_firstname);
             final EditText mLastName = (EditText)findViewById(R.id.basic_lastname);
@@ -222,62 +236,87 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             username = mUsername.getText().toString();
-                            cont = false;
+                            Log.d(TAG, "Checking user...");
                             check_user();
-                            while(!cont) {}
-                            if (!used) {
-                                //collect info
-                                username = mUsername.getText().toString();
-                                firstName = mFirstName.getText().toString();
-                                lastName = mLastName.getText().toString();
-                                birthDay = datePicker.getDayOfMonth();
-                                birthMonth = datePicker.getMonth();
-                                birthYear = datePicker.getYear();
-                                gender = (String) mGender.getSelectedItem();
-                                genderIndex = mGender.getSelectedItemPosition();
-                                //Go to food allergies
-                                create_allergies();
-                            }
                         }
                     }
                 });
     }
 
+    private void saveBasic() {
+        final DatePicker datePicker = (DatePicker) findViewById(R.id.birthdayPick);
+        final EditText mUsername = (EditText)findViewById(R.id.basic_username);
+        final EditText mFirstName = (EditText)findViewById(R.id.basic_firstname);
+        final EditText mLastName = (EditText)findViewById(R.id.basic_lastname);
+        final Spinner mGender = (Spinner) findViewById(R.id.gender);
+
+        username = mUsername.getText().toString();
+        firstName = mFirstName.getText().toString();
+        lastName = mLastName.getText().toString();
+        birthDay = datePicker.getDayOfMonth();
+        birthMonth = datePicker.getMonth();
+        birthYear = datePicker.getYear();
+        gender = (String) mGender.getSelectedItem();
+        genderIndex = mGender.getSelectedItemPosition();
+    }
+
     public void create_allergies(){
-//        for( int i = 0; i < allergy_names.size(); i++){
-//            CheckBox myCheck = new CheckBox(this);
-//            myCheck.setText(allergy_names.get(i));
-//            myCheck.setId(i);
-//            LinearLayout allergy_layout;// =  (LinearLayout) findViewById(R.id.);
-//            LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-//            //allergy_layout.addView(myCheck, lp);
-//            myCheck.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    CheckBox b = (CheckBox) view;
-//                    int allergy_id = b.getId() - 1;
+        setContentView(R.layout.activity_profile_builder_allergies);
+        ScrollView sv = new ScrollView(this);
+
+        Button mNextButton = (Button) findViewById(R.id.Next);
+        Button mBackButton = (Button) findViewById(R.id.Back);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.List);
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        //sv.addView(ll);
+
+        for( int i = 0; i < allergy_names.size(); i++){
+            CheckBox myCheck = new CheckBox(this);
+            myCheck.setText(allergy_names.get(i));
+            myCheck.setId(i);
+            myCheck.setChecked(allergies.get(i));
+            //LinearLayout allergy_layout;// =  (LinearLayout) findViewById(R.id.);
+            //LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            //allergy_layout.addView(myCheck, lp);
+            myCheck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CheckBox b = (CheckBox) view;
+                    int allergy_id = b.getId();
+                    allergies.set(allergy_id, b.isChecked());
+
 //                    if(allergies[allergy_id]){
-//                        allergies[allergy_id] = false;
+//                        allergies.set(allergy_id, false) = false;
 //                    }
 //                    else{
 //                        allergies[allergy_id] = true;
 //                    }
-//                }
-//
-//            });
-//        }
+                }
+
+            });
+            ll.addView(myCheck);
+            //list.add(myCheck);
+        }
+
+        mNextButton.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View view){
+                        //Move on to diets
+                        create_diets();
+                    }
+                });
+
+        mBackButton.setOnClickListener(
+                new View.OnClickListener(){
+                    public void onClick(View view){
+                        create_basic();;
+                    }
+                });
+
+        scrollView.addView(ll);
+
     }
 
-    public void add_user() {
-//        int id_num = ((RadioGroup) findViewById(R.id.radiogroup)).getCheckedRadioButtonId() - 9;
-//        diets[id_num] = true;
-//        User user = new User(mBirthyear.getText().toString(), mFirstname, mLastName, mGender, allergies, diets, username);
 
-    }
-    // on the last click
-
-//    public User(String birthYear, String firstName, String lastName, String gender, Boolean[] allergies, Boolean[] dietary)
-//
-//
-//
 }
