@@ -20,7 +20,6 @@
             android:layout_height="@dimen/titleTextHeight"
             android:src="@drawable/basic_info_title"
             android:tint="@color/title"
-            android:layout_gravity="center"
             />
 
         <LinearLayout
@@ -33,8 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="center"
-        android:weightSum="4.75"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="10"
         android:background="@color/titleBackground"
         >
 
@@ -43,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/basic_firstname"
                 android:hint="@string/firstName"
-                android:layout_weight=".25"
+                android:layout_weight="1"
+                android:layout_gravity="center"
                 />
 
             <EditText
@@ -51,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/basic_lastname"
                 android:hint="@string/lastName"
-                android:layout_weight=".25"
+                android:layout_weight="1"
+                android:layout_gravity="center"
                 />
 
             <EditText
@@ -59,7 +60,18 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/basic_username"
                 android:hint="@string/username"
-                android:layout_weight=".25"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/birthdayPrompt"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAlignment="center"
+
                 />
 
             <DatePicker
@@ -69,7 +81,20 @@
                 android:prompt="@string/birthday"
                 android:spinnersShown="true"
                 android:calendarViewShown="false"
-                android:layout_weight="2"/>
+                android:layout_weight="2"
+                android:gravity="center"
+                android:layout_gravity="center"
+                />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/genderPrompt"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAlignment="center"
+
+            />
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -77,13 +102,16 @@
                 android:id="@+id/Gender"
                 android:prompt="@string/gender"
                 android:entries="@array/gender_arrays"
-                android:layout_weight="1"/>
+                android:layout_weight="2"
+                android:gravity="center"
+                android:layout_gravity="center"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:weightSum="3">
 
@@ -91,11 +119,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     />
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     />
                 <Button
                     android:layout_width="0dp"
@@ -103,6 +133,7 @@
                     android:layout_weight="1"
                     android:id="@+id/Next"
                     android:text="@string/nextButton"
+                    android:layout_gravity="center"
                     />
             </LinearLayout>
         </LinearLayout>

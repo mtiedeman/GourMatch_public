@@ -82,6 +82,7 @@ public class AuthActivity extends AppCompatActivity implements
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    checkLogin();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -261,13 +262,14 @@ public class AuthActivity extends AppCompatActivity implements
                                 Log.w(TAG, "signInWithEmail", task.getException());
                                 Toast.makeText(AuthActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                            } else {
-
-                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-
                             }
+//                            else {
+//
+//                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                                startActivity(intent);
+//
+//                            }
                         }
                     });
         }
@@ -292,7 +294,7 @@ public class AuthActivity extends AppCompatActivity implements
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            checkLogoLogin();
+                            checkLogin();
                             // [START_EXCLUDE]
                             //hideProgressDialog();
                             // [END_EXCLUDE]
@@ -328,7 +330,7 @@ public class AuthActivity extends AppCompatActivity implements
         }
     }
 
-    //Addded majority from firebase
+    //Added majority from firebase
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
@@ -346,46 +348,40 @@ public class AuthActivity extends AppCompatActivity implements
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(AuthActivity.this, "Google authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d(TAG, "Google auth successful. Checking user...");
-                            checkLogoLogin();
                         }
+//                        else {
+//                            Log.d(TAG, "Google auth successful. Checking user...");
+//                            checkLogin();
+//                        }
                     }
                 });
     }
 
-    private void checkLogoLogin() {
-        boolean first = false;
-        final boolean[] temp = new boolean[1];
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(
+    private void checkLogin() {
+       DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
                 new ValueEventListener() {
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "User has not created their account.");
-                        temp[0] = false;
+
+                        if(!dataSnapshot.hasChild("username")) {
+                            Intent intent = new Intent(getApplicationContext(),ProfileBuilderActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        temp[0] = true;
-                        Log.d(TAG, "User has created their account.");
+                        //Throw up a toast
                     }
                 }
         );
-        first = temp[0];
-        Log.d(TAG, "First: " + first);
-        if(!first) {
-            Log.d(TAG, "Going to main.");
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        } else {
-            Log.d(TAG, "Going to profile builder.");
-            Intent intent = new Intent(getApplicationContext(), ProfileBuilderActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
     }
 
     @Override
