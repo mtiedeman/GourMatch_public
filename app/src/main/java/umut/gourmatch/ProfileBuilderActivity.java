@@ -211,6 +211,13 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     }
 
     private void finishProfile() {
+        /*
+        What needs to be done:
+        Collect all of the stored information and store to a new user under "users" using the auth ID
+        Before doing so, once again confirm that the username hasn't been taken. If it somehow has, let the user know
+        If there is an error adding the user, let them know and do not continue to the main screen
+        Once successfully added, continue to main using the same 4 lines as below
+         */
         Intent intent = new Intent(this,MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
