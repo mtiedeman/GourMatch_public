@@ -112,4 +112,38 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    //content main buttons
+    public void FeedMeButton(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "FeedMe coming soon!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+    public void WhatsGoodButton(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "whats Good coming soon!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+    public void FoodEventsButton(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Food Events coming soon!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+    public void RestaurantOfTheWeekButton(View view)
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Restaurants of the Week coming soon!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 }

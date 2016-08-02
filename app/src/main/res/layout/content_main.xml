@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/FeedMe"
-            android:onClick="sendMessage"
+            android:onClick="FeedMeButton"
             android:background="@color/gourMain" />
 
     </LinearLayout>
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/WhatsGood"
-            android:onClick="sendMessage"
+            android:onClick="WhatsGoodButton"
             android:background="@color/gourMain" />
 
     </LinearLayout>
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/FoodEvents"
-            android:onClick="sendMessage"
+            android:onClick="FoodEventsButton"
             android:background="@color/gourMain" />
 
     </LinearLayout>
@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/RestaurantWeek"
-            android:onClick="sendMessage"
+            android:onClick="RestaurantOfTheWeekButton"
             android:background="@color/gourMain" />
 
     </LinearLayout>
