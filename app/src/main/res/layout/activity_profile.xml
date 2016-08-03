@@ -11,7 +11,20 @@
     >
 
     <!--
-    
+    Will need three sets of views (within a scrollable view):
+    First: info that can be seen and is the same for both owners and viewers
+    Second: info that is seen by owners
+    Third: info that is seen by viewers
+
+    The last two should be set to invisible within the xml. Visibility will be determined in java.
+
+    Two options when building:
+    A) Establish what each view will contain within the XML, setting the individual values in java
+    B) Put place holders in the xml and build the actual views in the java
+
+    Each editable portion (I.e name, gender, etc.) will need an edit button next to it (edit_pencil.png in drawable).
+    When this is clicked, an appropriate DialogFragment should be set off. Edit should be invisible if user is not the owner.
     -->
+    <
 
 </RelativeLayout>

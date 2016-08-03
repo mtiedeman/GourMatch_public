@@ -86,6 +86,13 @@ public class MainActivity extends AppCompatActivity
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+
+            //UNCOMMENT THIS AND REMOVE ABOVE CODE WHEN Profile PAGE IS DONE
+            /*
+            Intent intent = new Intent(getApplicationContext(),Profile.class);
+            intent.putExtra("ID",FirebaseAuth.getInstance().getCurrentUser().getUid());
+            startActivity(intent);
+             */
         }
         else if (id == R.id.contact)
         {
