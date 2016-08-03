@@ -121,31 +121,6 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                 }
         );
         create_basic();
-
-
-/*
-        mAllergyButtonL = (Button) findViewById(R.id.next);
-        mAllergyButtonR = (Button) findViewById(R.id.next);
-
-        mAllergyButtonR.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View view){
-                    }
-                });
-
-        mAllergyButtonL.setOnClickListener(
-                new View.OnClickListener(){
-                    public void onClick(View view){
-                    }
-                });
-
-
-        mDietBackButton = (Button) findViewById(R.id.next);
-
-        mDietBackButton.setOnClickListerner(
-
-        )
-*/
     }
 
 
@@ -217,8 +192,13 @@ public class ProfileBuilderActivity extends AppCompatActivity {
         mFinishButton.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View view){
-                        //Store data and move on
-                        finishProfile();
+                        if(dietIndex == -1) {
+                            Toast.makeText(ProfileBuilderActivity.this, "Please pick one.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            //Store data and move on
+                            finishProfile();
+                        }
                     }
                 });
 
@@ -231,7 +211,17 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     }
 
     private void finishProfile() {
-
+        /*
+        What needs to be done:
+        Collect all of the stored information and store to a new user under "users" using the auth ID
+        Before doing so, once again confirm that the username hasn't been taken. If it somehow has, let the user know
+        If there is an error adding the user, let them know and do not continue to the main screen
+        Once successfully added, continue to main using the same 4 lines as below
+         */
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     public void create_basic() {
@@ -298,34 +288,22 @@ public class ProfileBuilderActivity extends AppCompatActivity {
         ScrollView scrollView = (ScrollView) findViewById(R.id.List);
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
-        //sv.addView(ll);
 
         for( int i = 0; i < allergy_names.size(); i++){
             CheckBox myCheck = new CheckBox(this);
             myCheck.setText(allergy_names.get(i));
             myCheck.setId(i);
             myCheck.setChecked(allergies.get(i));
-            //LinearLayout allergy_layout;// =  (LinearLayout) findViewById(R.id.);
-            //LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-            //allergy_layout.addView(myCheck, lp);
             myCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     CheckBox b = (CheckBox) view;
                     int allergy_id = b.getId();
                     allergies.set(allergy_id, b.isChecked());
-
-//                    if(allergies[allergy_id]){
-//                        allergies.set(allergy_id, false) = false;
-//                    }
-//                    else{
-//                        allergies[allergy_id] = true;
-//                    }
                 }
 
             });
             ll.addView(myCheck);
-            //list.add(myCheck);
         }
 
         mNextButton.setOnClickListener(
