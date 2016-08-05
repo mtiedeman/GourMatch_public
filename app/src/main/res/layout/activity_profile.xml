@@ -25,6 +25,5 @@
     Each editable portion (I.e name, gender, etc.) will need an edit button next to it (edit_pencil.png in drawable).
     When this is clicked, an appropriate DialogFragment should be set off. Edit should be invisible if user is not the owner.
     -->
-    <
 
 </RelativeLayout>
