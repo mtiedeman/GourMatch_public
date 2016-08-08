@@ -43,4 +43,6 @@
     <string name="sign_out">Sign Out</string>
     <string name="birthdayPrompt">Birthday</string>
     <string name="genderPrompt">Gender</string>
+    <string name="title_activity_feature_viewer">FeatureViewer</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
