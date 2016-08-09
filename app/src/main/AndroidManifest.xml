@@ -39,10 +39,7 @@
         <activity android:name=".AboutActivity"/>
         <activity android:name=".ContactActivity"/>
         <activity android:name=".Profile"/>
-        <activity
-            android:name=".FeatureViewer"
-            android:label="@string/title_activity_feature_viewer"
-            android:theme="@style/AppTheme">
+        <activity android:name=".FeatureActivity">
         </activity>
     </application>
 
