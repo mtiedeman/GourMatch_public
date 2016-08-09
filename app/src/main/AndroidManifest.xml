@@ -39,7 +39,8 @@
         <activity android:name=".AboutActivity"/>
         <activity android:name=".ContactActivity"/>
         <activity android:name=".Profile"/>
-        <activity android:name=".FeatureActivity">
+        <activity android:name=".FeatureActivity"
+            android:theme="@style/MyMaterialTheme">
         </activity>
     </application>
 
