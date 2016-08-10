@@ -104,9 +104,18 @@ public class CreateAccountActivity extends AppCompatActivity implements
                     Toast.makeText(CreateAccountActivity.this, "Please confirm password.",
                             Toast.LENGTH_SHORT).show();
                 } else
+                if(passText.getText().toString().indexOf(' ') != -1){
+                    Toast.makeText(CreateAccountActivity.this, "No spaces in your password",
+                            Toast.LENGTH_SHORT).show();
+                } else
+                if(passText.getText().toString().length() < 6){
+                    Toast.makeText(CreateAccountActivity.this, "Password must be 6 characters long",
+                            Toast.LENGTH_SHORT).show();
+                } else
                 if(passConfirmText.getText().toString().equals(passText.getText().toString())) {
                     login(emailText.getText().toString(), passText.getText().toString());
-                } else {
+                }
+                else {
                     Toast.makeText(CreateAccountActivity.this, "Password doesn't match confirmed password.",
                             Toast.LENGTH_SHORT).show();
                 }
