@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="umut.gourmatch">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -12,10 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
+            android:name="google_maps_key"
+            android:value="AIzaSyA5aj-wHgZ7qFVhlUvwE7bWiFWQCT9gU2g"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SplashActivity" android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,16 +37,22 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".ProfileBuilderActivity"
-            android:label="@string/title_activity_profile_builder"/>
+            android:label="@string/title_activity_profile_builder" />
         <activity
             android:name=".CreateAccountActivity"
             android:label="@string/title_activity_create_account"
-            android:theme="@style/AppTheme"/>
-        <activity android:name=".AboutActivity"/>
-        <activity android:name=".ContactActivity"/>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".ContactActivity" />
+
+        <service
+            android:name=".LocationService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity android:name=".Profile"/>
         <activity android:name=".FeatureActivity"
             android:theme="@style/MyMaterialTheme">
