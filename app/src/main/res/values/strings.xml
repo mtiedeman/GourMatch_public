@@ -36,6 +36,15 @@
     <string name="FoodEvents">Food Events</string>
     <string name="RestaurantWeek">Restaurant of the Week</string>
 
+    <string name="createListingTitle">Create Listing</string>
+    <string name="title">Title</string>
+    <string name="location_title">Location Title</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="description">Description</string>
+
     <string name="action_settings">Settings</string>
     <string name="profile">Profile</string>
     <string name="contact">Contact</string>
