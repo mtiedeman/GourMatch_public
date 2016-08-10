@@ -112,10 +112,12 @@
 
     <string-array name="FeedMe_Tab_Titles">
         <item>Listings</item>
+        <item>Requests</item>
     </string-array>
 
     <string-array name="FeedMe_Tab_Java">
         <item>Listings</item>
+        <item>RequestsFragment</item>
     </string-array>
 
     <string name="FeedMe_Image">feedme_title</string>
