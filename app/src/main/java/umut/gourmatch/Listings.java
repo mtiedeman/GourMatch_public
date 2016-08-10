@@ -38,7 +38,7 @@ import java.util.ArrayList;
  */
 public class Listings extends Fragment {
 
-//    private OnFragmentInteractionListener mListener;
+    //    private OnFragmentInteractionListener mListener;
     private ArrayList<ListingObj> list;
     private DatabaseReference mDatabase;
     private static final String TAG = "Listings.java";
@@ -96,31 +96,31 @@ public class Listings extends Fragment {
         list = new ArrayList<>();
         String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("listings").addListenerForSingleValueEvent(
+        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
                 new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.hasChild("owner")) {
-                            DataSnapshot ownedListings = dataSnapshot.child("owner");
-                            Iterable<DataSnapshot> children = ownedListings.getChildren();
+                        if(dataSnapshot.hasChild("listings")) {
+                            DataSnapshot listings = dataSnapshot.child("listings");
+                            Iterable<DataSnapshot> children = listings.getChildren();
                             for(DataSnapshot x : children) {
                                 //May or may not work
-                                ListingObj curr = new ListingObj((String) x.getValue(), true, getContext());
+                                ListingObj curr = new ListingObj(x.getKey(), (boolean) x.getValue(), getContext());
 
                                 list.add(curr);
                             }
                         }
-                        if(dataSnapshot.hasChild("guest")) {
-                            DataSnapshot ownedListings = dataSnapshot.child("guest");
-                            Iterable<DataSnapshot> children = ownedListings.getChildren();
-                            for(DataSnapshot x : children) {
-                                //May or may not work
-                                ListingObj curr = new ListingObj((String) x.getValue(), false, getContext());
-                                list.add(curr);
-                            }
-                        }
+//                        if(dataSnapshot.hasChild("guest")) {
+//                            DataSnapshot ownedListings = dataSnapshot.child("guest");
+//                            Iterable<DataSnapshot> children = ownedListings.getChildren();
+//                            for(DataSnapshot x : children) {
+//                                //May or may not work
+//                                ListingObj curr = new ListingObj((String) x.getValue(), false, getContext());
+//                                list.add(curr);
+//                            }
+//                        }
                         for(final ListingObj obj : list) {
                             //0:Title, 1:Value, 2:bold, 3:italicized, 4:size level (small, med, large)
                             ArrayList<String[]> info = obj.getInfoMini();

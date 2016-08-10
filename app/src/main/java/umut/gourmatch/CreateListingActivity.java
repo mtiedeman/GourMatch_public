@@ -33,6 +33,7 @@ public class CreateListingActivity extends AppCompatActivity {
     private EditText city_view;
     private EditText state_view;
     private EditText zip_code_view;
+    private EditText total_seats_view;
     private EditText description_view;
     private String longitude;
     private String latitude;
@@ -42,6 +43,7 @@ public class CreateListingActivity extends AppCompatActivity {
     private String city;
     private String state;
     private String zip_code;
+    private String total_seats;
     private String description;
     private DatabaseReference mDatabase;
     private  boolean success = true;
@@ -61,6 +63,7 @@ public class CreateListingActivity extends AppCompatActivity {
                 city_view            = (EditText)findViewById(R.id.city);
                 state_view           = (EditText)findViewById(R.id.state);
                 zip_code_view        = (EditText)findViewById(R.id.zip_code);
+                total_seats_view     = (EditText)findViewById(R.id.total_seats);
                 description_view     = (EditText)findViewById(R.id.description);
 
                 title = title_view.getText().toString();
@@ -69,6 +72,7 @@ public class CreateListingActivity extends AppCompatActivity {
                 city = city_view.getText().toString();
                 state = state_view.getText().toString();
                 zip_code = zip_code_view.getText().toString();
+                total_seats = total_seats_view.getText().toString();
                 description = description_view.getText().toString();
 
                 boolean isFinished  = true;
@@ -131,6 +135,15 @@ public class CreateListingActivity extends AppCompatActivity {
                     //create toast to warn user to finish input if not already done.
                     Context context = getApplicationContext();
                     CharSequence text = "Zip Code must contain 5 numbers";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    isFinished  = false;
+                    toast.show();
+                }
+                if(total_seats == null || total_seats.equals("")){
+                    //create toast to warn user to finish input if not already done.
+                    Context context = getApplicationContext();
+                    CharSequence text = "Total Seats can not be blank";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     isFinished  = false;

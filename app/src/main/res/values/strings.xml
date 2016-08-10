@@ -56,6 +56,7 @@
     <string name="title_activity_feature_viewer">FeatureViewer</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="one">one</string>
+    <string name="total_seats">Total Seats</string>
     <string-array name="short_listing">
         <item>Title</item>
         <item>Date</item>
@@ -112,10 +113,12 @@
 
     <string-array name="FeedMe_Tab_Titles">
         <item>Listings</item>
+        <item>Requests</item>
     </string-array>
 
     <string-array name="FeedMe_Tab_Java">
         <item>Listings</item>
+        <item>RequestsFragment</item>
     </string-array>
 
     <string name="FeedMe_Image">feedme_title</string>
