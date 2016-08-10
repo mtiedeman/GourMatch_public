@@ -37,6 +37,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import umut.gourmatch.User;
 
@@ -47,6 +50,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     private ArrayList<String> diet_names = new ArrayList<String>();
     private ArrayList<String> diet_info = new ArrayList<String>();
     // lacto, lacto_ovo, ovo, pesce, vegan
+    Map<String, String> allergy = new HashMap<String, String>();
     private ArrayList<Boolean> allergies = new ArrayList<Boolean>(); //final result
     private String myDiet;
     private int dietIndex = -1;
@@ -347,7 +351,8 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-                                mDatabase.child("users").child(userId).child("allergies").setValue(allergies, new DatabaseReference.CompletionListener() {
+                                System.out.println(allergy);
+                                mDatabase.child("users").child(userId).child("allergies").setValue(allergy, new DatabaseReference.CompletionListener() {
                                     @Override
                                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                                         if (databaseError != null) {
@@ -358,6 +363,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+
 
                             }
 
@@ -456,12 +462,18 @@ public class ProfileBuilderActivity extends AppCompatActivity {
             myCheck.setText(allergy_names.get(i));
             myCheck.setId(i);
             myCheck.setChecked(allergies.get(i));
+            allergy.put(allergy_names.get(i), "false");
             myCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     CheckBox b = (CheckBox) view;
                     int allergy_id = b.getId();
                     allergies.set(allergy_id, b.isChecked());
+                    String allergy_name = allergy_names.get(allergy_id);
+                    System.out.println("ALLERGY IS " + allergy_name);
+                    allergy.put(allergy_name, String.valueOf(b.isChecked()));
+
+                    System.out.println(allergy);
                 }
 
             });
