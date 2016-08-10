@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="umut.gourmatch.CreateListingActivity">
+
+
+
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:weightSum="1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="8"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHighlight="@color/gourAuthHint"
+                android:focusable="true"
+                android:text="@string/createListingTitle"
+                android:gravity="center"
+                android:textSize="30sp"
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/title"
+                android:hint="@string/title"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:layout_weight="1"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/location_title"
+                android:hint="@string/location_title"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:layout_weight="1"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/address"
+                android:hint="@string/address"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:inputType="textPostalAddress"
+                android:layout_weight="1"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/city"
+                android:hint="@string/city"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:inputType="textPostalAddress"
+                android:layout_weight="1"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/state"
+                android:hint="@string/state"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:inputType="textPostalAddress"
+                android:layout_weight="1"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/zip_code"
+                android:hint="@string/zip_code"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:inputType="number"
+                android:layout_weight="1"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_seats"
+                android:hint="@string/total_seats"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:inputType="number"
+                android:layout_weight="1"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/description"
+                android:hint="@string/description"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:layout_weight="1"
+                android:digits="0,1,2,3,4,5,6,7,8,9,*,qwertzuiopasdfghjklyxcvbnm"
+                />
+
+            <ImageButton
+                android:id="@+id/send"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/ic_menu_send"
+                android:layout_gravity="bottom|end"
+                android:layout_weight="1"
+                />
+<!--
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/fab_margin"
+                android:clickable="true"
+                app:backgroundTint="#43D58C"
+                android:src="@android:drawable/ic_menu_send"
+                android:layout_weight="1"
+                />
+-->
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
