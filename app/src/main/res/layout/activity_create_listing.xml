@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="7"
+            android:weightSum="8"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             >
@@ -104,6 +104,18 @@
                 android:inputType="number"
                 android:layout_weight="1"
                 />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/total_seats"
+                android:hint="@string/total_seats"
+                android:textColorHighlight="@color/gourHighlight"
+                android:textColorHint="@color/gourAuthHint"
+                android:focusable="true"
+                android:inputType="number"
+                android:layout_weight="1"
+                />
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
