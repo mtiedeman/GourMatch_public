@@ -45,6 +45,11 @@
     <string name="genderPrompt">Gender</string>
     <string name="title_activity_feature_viewer">FeatureViewer</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="one">one</string>
+    
     <string-array name="short_listing">
         <item>Title</item>
         <item>Date</item>
@@ -98,9 +103,5 @@
         <item>false</item>
         <item>small</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="one">one</string>
 </resources>
 
