@@ -12,97 +12,66 @@
     >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:weightSum="4"
+        android:orientation="vertical"
+        android:id="@+id/logo"
+        android:background="#ffffff"
+        >
+
+
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:id="@+id/logo">
-
-
-            <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/gourmatch_title"
-            android:scaleType="fitCenter"
-            android:scaleX=".75"
-            android:scaleY=".75"
-            android:tint="@color/gourAuthLogo"
-            android:layout_gravity="center"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal"
+        android:src="@drawable/feedme_title"
         android:id="@+id/feedmebutton"
-        android:layout_below="@+id/logo">
+        android:onClick="FeedMeButton"
+        android:tint="@color/FeedMe_main"
+        >
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/FeedMe"
-            android:onClick="FeedMeButton"
-            android:background="@color/gourMain" />
+    </ImageView>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
         android:id="@+id/whatsGood"
-        android:layout_below="@+id/feedmebutton">
+        android:src="@drawable/whatsgood_title"
+        android:onClick="WhatsGoodButton"
+        android:tint="@color/WhatsGood_main">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/WhatsGood"
-            android:onClick="WhatsGoodButton"
-            android:background="@color/gourMain" />
-
-    </LinearLayout>
+    </ImageView>
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
         android:id="@+id/foodEvents"
-        android:layout_below="@+id/whatsGood">
+        android:src="@drawable/foodevents_title"
+        android:onClick="FoodEventsButton"
+        android:tint="@color/FoodEvents_main"
+        >
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/FoodEvents"
-            android:onClick="FoodEventsButton"
-            android:background="@color/gourMain" />
+    </ImageView>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
         android:id="@+id/restaurantWeek"
-        android:layout_below="@+id/foodEvents">
+        android:src="@drawable/rotw_title"
+        android:onClick="RestaurantOfTheWeekButton"
+        android:tint="@color/RotW"
+        >
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/RestaurantWeek"
-            android:onClick="RestaurantOfTheWeekButton"
-            android:background="@color/gourMain" />
+    </ImageView>
+
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

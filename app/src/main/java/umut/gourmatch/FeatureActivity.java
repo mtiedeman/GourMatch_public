@@ -46,7 +46,7 @@ public class FeatureActivity extends AppCompatActivity {
         ImageView titleImage = (ImageView) findViewById(R.id.titleImage);
         String imageName = getResources().getString(getResources().getIdentifier(feature+"_Image", "string", getPackageName()));
         titleImage.setImageResource(getResources().getIdentifier(imageName, "drawable", getPackageName()));
-        titleImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), getResources().getIdentifier(feature+"_main", "color", getPackageName())));
+        titleImage.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), getResources().getIdentifier(feature+"_main", "color", getPackageName())));
 
         tabJavas = getResources().getStringArray(getResources().getIdentifier(javaPull, "array", getPackageName()));
         tabTitles = getResources().getStringArray(getResources().getIdentifier(titlePull, "array", getPackageName()));
