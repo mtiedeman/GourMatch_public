@@ -47,10 +47,9 @@ public class ProfileBuilderActivity extends AppCompatActivity {
     private ArrayList<String> diet_names = new ArrayList<String>();
     private ArrayList<String> diet_info = new ArrayList<String>();
     // lacto, lacto_ovo, ovo, pesce, vegan
-    private ArrayList<Boolean> allergies = new ArrayList<Boolean>();
-    private String diet;
+    private ArrayList<Boolean> allergies = new ArrayList<Boolean>(); //final result
+    private String myDiet;
     private int dietIndex = -1;
-    private final Firebase ref = new Firebase("https://gourmatch.firebaseio.com/users");
     private DatabaseReference mDatabase;
     private String username;
     private String firstName;
@@ -68,6 +67,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
 //    private EditText mLastName;
     private FirebaseAuth mAuth;
     private String userId;
+    private boolean success = true;
 
 
     @Override
@@ -183,7 +183,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 dietIndex = i;
-                diet = diet_names.get(i);
+                myDiet = diet_names.get(i);
             }
         });
         ll.addView(group);
@@ -210,6 +210,7 @@ public class ProfileBuilderActivity extends AppCompatActivity {
                 });
     }
 
+
     private void finishProfile() {
         /*
         What needs to be done:
@@ -218,10 +219,167 @@ public class ProfileBuilderActivity extends AppCompatActivity {
         If there is an error adding the user, let them know and do not continue to the main screen
         Once successfully added, continue to main using the same 4 lines as below
          */
-        Intent intent = new Intent(this,MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+
+
+        mDatabase.child("usernames").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Log.d(TAG, "Got data");
+                            //get username
+                            if (dataSnapshot.hasChild(username)) {
+                                Log.e(TAG, "User " + username + " is taken");
+                                Toast.makeText(ProfileBuilderActivity.this,
+                                        "Username was taken between now and before, please choose another.",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d(TAG, "last username check: Username not taken.");
+                                //write to database
+                                //mDatabase.child("users").child(userId).child("username").setValue(username);
+                                mDatabase.child("usernames").child(username).setValue(userId, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            success = false;
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("username").setValue(username, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            success = false;
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+
+                                mDatabase.child("users").child(userId).child("firstName").setValue(firstName, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            success = false;
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("lastName").setValue(lastName, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            success = false;
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("birthYear").setValue(birthYear, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            success = false;
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("birthMonth").setValue(birthMonth, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            success = false;
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("birthDay").setValue(birthDay, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            success = false;
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("gender").setValue(gender, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                            success = false;
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("currLocation").setValue(true, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                            success = false;
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("diet").setValue(myDiet, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                            success = false;
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+                                mDatabase.child("users").child(userId).child("allergies").setValue(allergies, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                        if (databaseError != null) {
+                                            System.out.println("Data could not be saved " + databaseError.getMessage());
+                                            success = false;
+                                        } else {
+                                            System.out.println("Data saved successfully.");
+                                        }
+                                    }
+                                });
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(TAG, "Username error");
+
+                        }
+                    }
+        );
+
+
+        if(success) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        }
+        //maybe have it so when you click the button, we set success to true
+        success = true;
     }
 
     public void create_basic() {
@@ -249,6 +407,10 @@ public class ProfileBuilderActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(
                 new View.OnClickListener(){
                     public void onClick(View view){
+                        if(mUsername.getText().toString().indexOf(' ') != -1) {
+                            Toast.makeText(ProfileBuilderActivity.this, "No spaces in Username.",
+                                    Toast.LENGTH_SHORT).show();
+                        }else
                         if(userId.isEmpty()) {
                             Toast.makeText(ProfileBuilderActivity.this,
                                     "Please enter a username.",

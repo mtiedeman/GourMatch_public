@@ -248,6 +248,10 @@ public class AuthActivity extends AppCompatActivity implements
             Toast.makeText(AuthActivity.this, "No email address entered.",
                     Toast.LENGTH_SHORT).show();
         } else
+        if(password.indexOf(' ') != -1){
+            Toast.makeText(AuthActivity.this, "password can not contain spaces.",
+                    Toast.LENGTH_SHORT).show();
+        }
         if(password.isEmpty()) {
             Toast.makeText(AuthActivity.this, "No password entered.",
                     Toast.LENGTH_SHORT).show();
@@ -358,7 +362,7 @@ public class AuthActivity extends AppCompatActivity implements
     }
 
     private void checkLogin() {
-       DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
                 new ValueEventListener() {
 

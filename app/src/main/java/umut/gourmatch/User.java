@@ -7,19 +7,20 @@ import java.lang.reflect.Array;
  */
 public class User {
     // will be used to put stuff into the database about the user
+    private String lastLogin;
     private String birthYear;
     private String firstName;
     private String lastName;
     private String gender;
     // eggs, fish, milk, peanut, shellfish, soy, treenuts, wheats
-    private Boolean[] allergies = new Boolean[8];
+    private boolean[] allergies = new boolean[8];
     // lacto, lacto_ovo, ovo, pesce, vegan
-    private Boolean[] dietary = new Boolean[5];
+    private boolean[] dietary = new boolean[5];
     private String username;
 
     public User() {}
 
-    public User(String birthYear, String firstName, String lastName, String gender, Boolean[] allergies, Boolean[] dietary, String username) {
+    public User(String birthYear, String firstName, String lastName, String gender, boolean[] allergies, boolean[] dietary, String username) {
         this.birthYear = birthYear;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,10 +40,10 @@ public class User {
     public String getGender(){
         return this.gender;
     }
-    public Boolean[] getAllergies(){
+    public boolean[] getAllergies(){
         return this.allergies;
     }
-    public Boolean[] getDietary(){
+    public boolean[] getDietary(){
         return this.dietary;
     }
     public String getFirstName(){
@@ -51,5 +52,6 @@ public class User {
     public String getLastName(){
         return this.lastName;
     }
+    public String getLastLogin() { return this.lastLogin; }
 
 }
