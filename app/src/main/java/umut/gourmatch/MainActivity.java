@@ -123,11 +123,17 @@ public class MainActivity extends AppCompatActivity
     //content main buttons
     public void FeedMeButton(View view)
     {
-        Context context = getApplicationContext();
+
+        Intent intent = new Intent(this,FeatureActivity.class);
+        startActivity(intent);
+
+        //toast option for onclick
+        /*Context context = getApplicationContext();
         CharSequence text = "FeedMe coming soon!";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        toast.show(); */
+
     }
     public void WhatsGoodButton(View view)
     {
