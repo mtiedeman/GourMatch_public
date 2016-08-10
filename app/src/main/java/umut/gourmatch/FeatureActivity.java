@@ -17,19 +17,35 @@ import umut.gourmatch.OneFragment;
 
 public class FeatureActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    //private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String[] tabTitles;
+    private String[] tabJavas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feature);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Bundle extras = getIntent().getExtras();
+        String feature = "";
+        if (extras != null) {
+            feature = extras.getString("FEATURE");
+        } else {
+            //ERROR STUFF CAUSE THIS SHOULDN'T HAPPEN
+        }
+        //Need to set title image and color scheme
+        String titlePull = feature + "_Tab_Titles";
+        String javaPull =  feature + "_Tab_Java";
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        tabJavas = getResources().getStringArray(getResources().getIdentifier(javaPull, "array", getPackageName()));
+        tabTitles = getResources().getStringArray(getResources().getIdentifier(titlePull, "array", getPackageName()));
+
+        //toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -40,9 +56,20 @@ public class FeatureActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "ONE");
-        adapter.addFragment(new OneFragment(), "TWO");
-        adapter.addFragment(new OneFragment(), "THREE");
+        for(int i = 0; i < tabJavas.length; i++) {
+            try {
+                adapter.addFragment((Fragment) (Class.forName("umut.gourmatch."+tabJavas[i])).newInstance(), tabTitles[0]);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        adapter.addFragment(new Listings(), "TWO");
+//        adapter.addFragment(new OneFragment(), "THREE");
         viewPager.setAdapter(adapter);
     }
 
