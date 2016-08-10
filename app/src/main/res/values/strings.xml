@@ -118,4 +118,6 @@
         <item>Listings</item>
     </string-array>
 
+    <string name="FeedMe_Image">feedme_title</string>
+
 </resources>
