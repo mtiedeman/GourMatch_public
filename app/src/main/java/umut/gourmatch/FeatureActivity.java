@@ -5,9 +5,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,12 @@ public class FeatureActivity extends AppCompatActivity {
         //Need to set title image and color scheme
         String titlePull = feature + "_Tab_Titles";
         String javaPull =  feature + "_Tab_Java";
+        Log.d("FeatureActivity.java", feature + " feature");
+
+        ImageView titleImage = (ImageView) findViewById(R.id.titleImage);
+        String imageName = getResources().getString(getResources().getIdentifier(feature+"_Image", "string", getPackageName()));
+        titleImage.setImageResource(getResources().getIdentifier(imageName, "drawable", getPackageName()));
+        titleImage.setColorFilter(ContextCompat.getColor(getApplicationContext(), getResources().getIdentifier(feature+"_main", "color", getPackageName())));
 
         tabJavas = getResources().getStringArray(getResources().getIdentifier(javaPull, "array", getPackageName()));
         tabTitles = getResources().getStringArray(getResources().getIdentifier(titlePull, "array", getPackageName()));
@@ -48,9 +57,11 @@ public class FeatureActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), getResources().getIdentifier(feature+"_tabBack", "color", getPackageName())));
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setTabTextColors(ContextCompat.getColor(getApplicationContext(), getResources().getIdentifier(feature+"_tabFont", "color", getPackageName())), ContextCompat.getColor(getApplicationContext(), getResources().getIdentifier(feature+"_tabFont", "color", getPackageName())));
         tabLayout.setupWithViewPager(viewPager);
     }
 

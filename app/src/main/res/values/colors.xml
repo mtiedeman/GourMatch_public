@@ -16,6 +16,9 @@
     <color name="titleBackground">#ffffff</color>
     <color name="title">#FF0000</color>
     <color name="feedme_frag_background">#ffffff</color>
+    <color name="FeedMe_main">#FF5710</color>
+    <color name="FeedMe_tabBack">#FF0000</color>
+    <color name="FeedMe_tabFont">#FF5710</color>
     <color name="feedme_list_plus">#444444</color>
     <color name="listing_owned">#00FF63</color>
     <color name="listing_guest">#CC14AA</color>
