@@ -46,4 +46,58 @@
     <string name="title_activity_feature_viewer">FeatureViewer</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="one">one</string>
+    <string-array name="short_listing">
+        <item>Title</item>
+        <item>Date</item>
+        <item>Time</item>
+        <item>Location</item>
+        <item>Address</item>
+    </string-array>
+    <string-array name="Title">
+        <item>title</item>
+    </string-array>
+    <string-array name="Date">
+        <item>datemonth</item>
+        <item>dateday</item>
+        <item>dateyear</item>
+    </string-array>
+    <string-array name="Time">
+        <item>timehour</item>
+        <item>timemin</item>
+    </string-array>
+    <string-array name="Location">
+        <item>locationname</item>
+    </string-array>
+    <string-array name="Address">
+        <item>addressline</item>
+        <item>city</item>
+        <item>state</item>
+    </string-array>
+    <!--  bold, italicized, size level (small, med, large) -->
+    <string-array name="Title_settings">
+        <item>true</item>
+        <item>false</item>
+        <item>large</item>
+    </string-array>
+    <string-array name="Date_settings">
+        <item>false</item>
+        <item>false</item>
+        <item>medium</item>
+    </string-array>
+    <string-array name="Time_settings">
+        <item>false</item>
+        <item>true</item>
+        <item>small</item>
+    </string-array>
+    <string-array name="Location_settings">
+        <item>false</item>
+        <item>false</item>
+        <item>medium</item>
+    </string-array>
+    <string-array name="Address_settings">
+        <item>false</item>
+        <item>false</item>
+        <item>small</item>
+    </string-array>
 </resources>
+
