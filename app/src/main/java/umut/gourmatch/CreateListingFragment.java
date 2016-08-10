@@ -41,13 +41,13 @@ public class CreateListingFragment extends Fragment {
     private EditText description_view;
 
 
-    private String title;
-    private String location_title;
-    private String address;
-    private String city;
-    private String state;
-    private int    zip_code;
-    private String description;
+    private String title = "";
+    private String location_title = "";
+    private String address = "";
+    private String city = "";
+    private String state = "";
+    private int    zip_code = 0;
+    private String description = "";
 
     private OnFragmentInteractionListener mListener;
 
