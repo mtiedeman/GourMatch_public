@@ -99,5 +99,14 @@
         <item>false</item>
         <item>small</item>
     </string-array>
+
+    <string-array name="FeedMe_Tab_Titles">
+        <item>Listings</item>
+    </string-array>
+
+    <string-array name="FeedMe_Tab_Java">
+        <item>Listings</item>
+    </string-array>
+
 </resources>
 

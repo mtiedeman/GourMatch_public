@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity
     {
 
         Intent intent = new Intent(this,FeatureActivity.class);
+        intent.putExtra("FEATURE", "FeedMe");
         startActivity(intent);
 
         //toast option for onclick
