@@ -74,6 +74,8 @@ public class Listings extends Fragment {
 //        }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,6 +86,8 @@ public class Listings extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "****CLICKED****");
+                Intent intent = new Intent(getActivity(),CreateListingActivity.class);
+                startActivity(intent);
             }
         });
         final ScrollView sv = (ScrollView) view.findViewById(R.id.scrollView);
