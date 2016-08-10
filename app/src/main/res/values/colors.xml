@@ -15,14 +15,8 @@
     <color name = "blue">#0000ff</color>
     <color name="titleBackground">#ffffff</color>
     <color name="title">#FF0000</color>
-
-    <!-- xml labs colors -->
- <!--   <color name="colorPrimary">#125688</color>
-    <color name="colorPrimaryDark">#125688</color>
-    <color name="colorAccent">#c8e8ff</color>  -->
-    <color name="textColorPrimary">#FFFFFF</color>
-    <color name="windowBackground">#FFFFFF</color>
-    <color name="navigationBarColor">#000000</color>
-
-
+    <color name="feedme_frag_background">#ffffff</color>
+    <color name="feedme_list_plus">#444444</color>
+    <color name="listing_owned">#00FF63</color>
+    <color name="listing_guest">#CC14AA</color>
 </resources>
