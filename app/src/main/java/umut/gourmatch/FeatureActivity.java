@@ -69,7 +69,7 @@ public class FeatureActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         for(int i = 0; i < tabJavas.length; i++) {
             try {
-                adapter.addFragment((Fragment) (Class.forName("umut.gourmatch."+tabJavas[i])).newInstance(), tabTitles[0]);
+                adapter.addFragment((Fragment) (Class.forName("umut.gourmatch."+tabJavas[i])).newInstance(), tabTitles[i]);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
