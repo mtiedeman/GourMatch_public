@@ -126,5 +126,7 @@
     <string name="yourEmail">Your Email</string>
     <string name="ComposeEmail">Compose Email</string>
     <string name="Message">Message</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
 
 </resources>
