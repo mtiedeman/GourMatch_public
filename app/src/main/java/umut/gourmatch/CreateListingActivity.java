@@ -59,6 +59,12 @@ public class CreateListingActivity extends AppCompatActivity {
     private  boolean success = true;
     private String date;
     private String time;
+    private int day;
+    private int month;
+    private int year;
+    private int hour;
+    private int min;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,16 +96,16 @@ public class CreateListingActivity extends AppCompatActivity {
                 description = description_view.getText().toString();
 
                 //date
-                int   day  = datepicker.getDayOfMonth();
-                int   month= datepicker.getMonth();
-                int   year = datepicker.getYear();
+                day  = datepicker.getDayOfMonth();
+                month= datepicker.getMonth();
+                year = datepicker.getYear();
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 String formatedDate = sdf.format(new Date(year, month, day));
 
                 //time
-                int hour = timepicker.getCurrentHour();
-                int min = timepicker.getCurrentMinute();
+                hour = timepicker.getCurrentHour();
+                min = timepicker.getCurrentMinute();
 
                 boolean isFinished  = true;
 
@@ -318,6 +324,61 @@ public class CreateListingActivity extends AppCompatActivity {
                 }
             });
             listDB.child("total_seats").setValue(total_seats, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        System.out.println("Data could not be saved " + databaseError.getMessage());
+                        success = false;
+                    } else {
+                        System.out.println("Data saved successfully.");
+                    }
+                }
+            });
+            listDB.child("date").child("day").setValue(day, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        System.out.println("Data could not be saved " + databaseError.getMessage());
+                        success = false;
+                    } else {
+                        System.out.println("Data saved successfully.");
+                    }
+                }
+            });
+            listDB.child("date").child("month").setValue(month, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        System.out.println("Data could not be saved " + databaseError.getMessage());
+                        success = false;
+                    } else {
+                        System.out.println("Data saved successfully.");
+                    }
+                }
+            });
+            listDB.child("date").child("year").setValue(year, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        System.out.println("Data could not be saved " + databaseError.getMessage());
+                        success = false;
+                    } else {
+                        System.out.println("Data saved successfully.");
+                    }
+                }
+            });
+            listDB.child("time").child("minute").setValue(min, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        System.out.println("Data could not be saved " + databaseError.getMessage());
+                        success = false;
+                    } else {
+                        System.out.println("Data saved successfully.");
+                    }
+                }
+            });
+            listDB.child("time").child("hour").setValue(hour, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                     if (databaseError != null) {
