@@ -25,6 +25,7 @@
 
         <activity
             android:name=".SplashActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -32,34 +33,44 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".AuthActivity"/>
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".AuthActivity"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name="com.facebook.FacebookActivity"
+            android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name=".ProfileBuilderActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_profile_builder"/>
         <activity
             android:name=".CreateAccountActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_create_account"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".AboutActivity"/>
-        <activity android:name=".ContactActivity"/>
+        <activity android:name=".AboutActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".ContactActivity"
+                  android:screenOrientation="portrait"/>
 
         <service
             android:name=".LocationService"
             android:enabled="true"
             android:exported="true"/>
 
-        <activity android:name=".Profile"/>
+        <activity android:name=".Profile"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name=".FeatureActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/MyMaterialTheme">
         </activity>
-        <activity android:name=".CreateListingActivity">
+        <activity android:name=".CreateListingActivity"
+                  android:screenOrientation="portrait">
         </activity>
     </application>
 
