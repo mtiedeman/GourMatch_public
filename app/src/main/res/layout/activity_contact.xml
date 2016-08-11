@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:background="@color/titleBackground"
-        android:weightSum="9"
+        android:weightSum="10"
         >
 
         <ImageView
@@ -59,6 +59,15 @@
             android:focusable="true"
             android:layout_weight="4"
             android:gravity="top"
+            />
+
+        <ImageButton
+            android:id="@+id/send"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@android:drawable/ic_menu_send"
+            android:layout_gravity="bottom|end"
+            android:layout_weight="1"
             />
     </LinearLayout>
 
