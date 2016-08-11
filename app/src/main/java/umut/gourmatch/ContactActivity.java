@@ -37,7 +37,7 @@ public class ContactActivity extends AppCompatActivity {
         ImageButton startBtn = (ImageButton) findViewById(R.id.send);
         startBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String subject = "Message from " + name;
+                String subject = "Message from User " + name;
                 sendEmail(email, subject, message);
             }
         });
@@ -56,7 +56,8 @@ public class ContactActivity extends AppCompatActivity {
         emailIntent.putExtra(Intent.EXTRA_TEXT, message);
 
         try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            Toast.makeText(ContactActivity.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+            //startActivity(Intent.createChooser(emailIntent, "Send mail..."));
             finish();
         }
         catch (android.content.ActivityNotFoundException ex) {
