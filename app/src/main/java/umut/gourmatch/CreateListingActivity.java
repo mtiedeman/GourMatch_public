@@ -189,13 +189,6 @@ public class CreateListingActivity extends AppCompatActivity {
         Geocoder coder = new Geocoder(this);
         try {
             ArrayList<Address> addresses = (ArrayList<Address>) coder.getFromLocationName(address + ", " + city + ", " + state + ", " + zip_code, 50);
-<<<<<<< HEAD
-            Log.d("CreateListingsActivity", "String: " + address + ", " + city + ", " + state + ", " + zip_code);
-            Log.d("CreateListingsActivity", "List size: " + addresses.size());
-            Address add = addresses.get(0);
-            latitude = String.valueOf(add.getLatitude());
-            longitude = String.valueOf(add.getLongitude());
-=======
             if(addresses.size() == 0){
                 Context context = getApplicationContext();
                 CharSequence text = "Could not find address!";
@@ -209,7 +202,6 @@ public class CreateListingActivity extends AppCompatActivity {
                 latitude = add.getLatitude();
                 longitude = add.getLongitude();
             }
->>>>>>> refs/remotes/origin/dev
 
         } catch (IOException e) {
             Context context = getApplicationContext();
