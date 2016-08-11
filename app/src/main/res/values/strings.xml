@@ -122,5 +122,9 @@
     </string-array>
 
     <string name="FeedMe_Image">feedme_title</string>
+    <string name="Name">Name</string>
+    <string name="yourEmail">Your Email</string>
+    <string name="ComposeEmail">Compose Email</string>
+    <string name="Message">Message</string>
 
 </resources>

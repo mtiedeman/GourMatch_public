@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +27,7 @@ import java.util.List;
 
 public class CreateListingActivity extends AppCompatActivity {
 
+    private GeoFire geofire;
     private FirebaseAuth mAuth;
     private String userId;
     private EditText title_view;
@@ -35,8 +38,8 @@ public class CreateListingActivity extends AppCompatActivity {
     private EditText zip_code_view;
     private EditText total_seats_view;
     private EditText description_view;
-    private String longitude;
-    private String latitude;
+    private double longitude;
+    private double latitude;
     private String title;
     private String location_title;
     private String address;
@@ -163,7 +166,6 @@ public class CreateListingActivity extends AppCompatActivity {
                     //System.out.println("DESCRIPTION: " + description);
                     //   int int_zip_code = Integer.parseInt(zip_code);
                     save_listing();
-                    finish();
                 }
 
 
@@ -187,11 +189,27 @@ public class CreateListingActivity extends AppCompatActivity {
         Geocoder coder = new Geocoder(this);
         try {
             ArrayList<Address> addresses = (ArrayList<Address>) coder.getFromLocationName(address + ", " + city + ", " + state + ", " + zip_code, 50);
+<<<<<<< HEAD
             Log.d("CreateListingsActivity", "String: " + address + ", " + city + ", " + state + ", " + zip_code);
             Log.d("CreateListingsActivity", "List size: " + addresses.size());
             Address add = addresses.get(0);
             latitude = String.valueOf(add.getLatitude());
             longitude = String.valueOf(add.getLongitude());
+=======
+            if(addresses.size() == 0){
+                Context context = getApplicationContext();
+                CharSequence text = "Could not find address!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                success = false;
+                toast.show();
+            }
+            else {
+                Address add = addresses.get(0);
+                latitude = add.getLatitude();
+                longitude = add.getLongitude();
+            }
+>>>>>>> refs/remotes/origin/dev
 
         } catch (IOException e) {
             Context context = getApplicationContext();
@@ -284,7 +302,28 @@ public class CreateListingActivity extends AppCompatActivity {
                     }
                 }
             });
-
+            listDB.child("total_seats").setValue(total_seats, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        System.out.println("Data could not be saved " + databaseError.getMessage());
+                        success = false;
+                    } else {
+                        System.out.println("Data saved successfully.");
+                    }
+                }
+            });
+            listDB.child("userId").setValue(userId, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                    if (databaseError != null) {
+                        System.out.println("Data could not be saved " + databaseError.getMessage());
+                        success = false;
+                    } else {
+                        System.out.println("Data saved successfully.");
+                    }
+                }
+            });
             // save the list id to a user
             mDatabase.child("users").child(userId).child("listings").child(listID).setValue(true, new DatabaseReference.CompletionListener() {
                 @Override
@@ -297,6 +336,12 @@ public class CreateListingActivity extends AppCompatActivity {
                     }
                 }
             });
+
+
+            geofire = new GeoFire(mDatabase.child("geofire").child("listings"));
+
+            geofire.setLocation(listID, new GeoLocation(latitude, longitude));
+            finish();
         }
         //mDatabase.child(user)
 
