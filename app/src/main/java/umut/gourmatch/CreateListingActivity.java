@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -21,7 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,6 +42,9 @@ public class CreateListingActivity extends AppCompatActivity {
     private EditText zip_code_view;
     private EditText total_seats_view;
     private EditText description_view;
+    private DatePicker datepicker;
+    private TimePicker timepicker;
+
     private double longitude;
     private double latitude;
     private String title;
@@ -50,6 +57,8 @@ public class CreateListingActivity extends AppCompatActivity {
     private String description;
     private DatabaseReference mDatabase;
     private  boolean success = true;
+    private String date;
+    private String time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +77,8 @@ public class CreateListingActivity extends AppCompatActivity {
                 zip_code_view        = (EditText)findViewById(R.id.zip_code);
                 total_seats_view     = (EditText)findViewById(R.id.total_seats);
                 description_view     = (EditText)findViewById(R.id.description);
+                datepicker  = (DatePicker)findViewById(R.id.datePick);
+                timepicker = (TimePicker)findViewById(R.id.timePick);
 
                 title = title_view.getText().toString();
                 location_title = location_title_view.getText().toString();
@@ -77,6 +88,18 @@ public class CreateListingActivity extends AppCompatActivity {
                 zip_code = zip_code_view.getText().toString();
                 total_seats = total_seats_view.getText().toString();
                 description = description_view.getText().toString();
+
+                //date
+                int   day  = datepicker.getDayOfMonth();
+                int   month= datepicker.getMonth();
+                int   year = datepicker.getYear();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String formatedDate = sdf.format(new Date(year, month, day));
+
+                //time
+                int hour = timepicker.getCurrentHour();
+                int min = timepicker.getCurrentMinute();
 
                 boolean isFinished  = true;
 
