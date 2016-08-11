@@ -77,10 +77,10 @@
         <item>timemin</item>
     </string-array>
     <string-array name="Location">
-        <item>locationname</item>
+        <item>location_title</item>
     </string-array>
     <string-array name="Address">
-        <item>addressline</item>
+        <item>address</item>
         <item>city</item>
         <item>state</item>
     </string-array>

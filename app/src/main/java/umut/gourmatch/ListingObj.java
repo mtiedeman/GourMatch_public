@@ -1,6 +1,7 @@
 package umut.gourmatch;
 
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +35,8 @@ public class ListingObj {
 
     private String[] infoMini;
 
+    private Object lock = new Object();
+
     public ListingObj(String id, boolean owner, Context c) {
         context = c;
         OWN = ContextCompat.getColor(context, R.color.listing_owned);
@@ -50,12 +53,21 @@ public class ListingObj {
             @Override
             public void run() {
                 DatabaseReference mD = FirebaseDatabase.getInstance().getReference();
+                Log.d("ListingObj", "Reach run");
                 mD.child("listings").child(listingID).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.hasChild("uid")) {
+                        Log.d("ListingObj", "Data changed");
+                        if(dataSnapshot.hasChild("userId")) {
+
                             empty = false;
                             collectData(dataSnapshot);
+                        } else {
+                            try {
+                                notifyObject(lock);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 
@@ -68,10 +80,12 @@ public class ListingObj {
         });
         a.run();
         try {
-            wait();
+            Log.d("ListingObj", "Wait");
+            waitObject(lock);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Log.d("ListingObj", "End");
         //end
     }
 
@@ -84,7 +98,15 @@ public class ListingObj {
             Object val = curr.getValue();
             list.put(title, val);
         }
-        notify();
+//        synchronized (lock) {
+//            lock.notify();
+//        }
+        try {
+            Log.d("ListingObj", "Notified");
+            notifyObject(lock);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<String[]> getInfoMini() {
@@ -140,5 +162,17 @@ public class ListingObj {
 
     public boolean isEmpty() {
         return empty;
+    }
+
+    public void waitObject(Object object) throws InterruptedException {
+        synchronized(object) {
+            object.wait();
+        }
+    }
+
+    public void notifyObject(Object object) throws InterruptedException {
+        synchronized(object) {
+            object.notify();
+        }
     }
 }

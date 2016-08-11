@@ -107,6 +107,7 @@ public class Listings extends Fragment {
                             Iterable<DataSnapshot> children = listings.getChildren();
                             for(DataSnapshot x : children) {
                                 //May or may not work
+                                Log.d("Listings.java", "Key: " + x.getKey());
                                 ListingObj curr = new ListingObj(x.getKey(), (boolean) x.getValue(), getContext());
 
                                 list.add(curr);

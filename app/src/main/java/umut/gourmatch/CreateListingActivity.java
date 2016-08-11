@@ -187,6 +187,8 @@ public class CreateListingActivity extends AppCompatActivity {
         Geocoder coder = new Geocoder(this);
         try {
             ArrayList<Address> addresses = (ArrayList<Address>) coder.getFromLocationName(address + ", " + city + ", " + state + ", " + zip_code, 50);
+            Log.d("CreateListingsActivity", "String: " + address + ", " + city + ", " + state + ", " + zip_code);
+            Log.d("CreateListingsActivity", "List size: " + addresses.size());
             Address add = addresses.get(0);
             latitude = String.valueOf(add.getLatitude());
             longitude = String.valueOf(add.getLongitude());
