@@ -94,97 +94,97 @@ public class Listings extends Fragment {
 //        int ownColor = ContextCompat.getColor(getContext(), R.color.listing_owned);
 //        int guestColor = ContextCompat.getColor(getContext(), R.color.listing_guest);
         list = new ArrayList<>();
-        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        if(dataSnapshot.hasChild("listings")) {
-                            DataSnapshot listings = dataSnapshot.child("listings");
-                            Iterable<DataSnapshot> children = listings.getChildren();
-                            for(DataSnapshot x : children) {
-                                //May or may not work
-                                ListingObj curr = new ListingObj(x.getKey(), (boolean) x.getValue(), getContext());
-
-                                list.add(curr);
-                            }
-                        }
-//                        if(dataSnapshot.hasChild("guest")) {
-//                            DataSnapshot ownedListings = dataSnapshot.child("guest");
-//                            Iterable<DataSnapshot> children = ownedListings.getChildren();
+//        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        mDatabase = FirebaseDatabase.getInstance().getReference();
+//        mDatabase.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addListenerForSingleValueEvent(
+//                new ValueEventListener() {
+//
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                        if(dataSnapshot.hasChild("listings")) {
+//                            DataSnapshot listings = dataSnapshot.child("listings");
+//                            Iterable<DataSnapshot> children = listings.getChildren();
 //                            for(DataSnapshot x : children) {
 //                                //May or may not work
-//                                ListingObj curr = new ListingObj((String) x.getValue(), false, getContext());
+//                                ListingObj curr = new ListingObj(x.getKey(), (boolean) x.getValue(), getContext());
+//
 //                                list.add(curr);
 //                            }
 //                        }
-                        for(final ListingObj obj : list) {
-                            //0:Title, 1:Value, 2:bold, 3:italicized, 4:size level (small, med, large)
-                            ArrayList<String[]> info = obj.getInfoMini();
-                            LinearLayout lv = new LinearLayout(getContext());
-                            lv.setBackgroundColor(obj.color);
-                            lv.setOrientation(LinearLayout.VERTICAL);
-                            for(String[] text : info) {
-                                LinearLayout lh = new LinearLayout(getContext());
-                                lh.setOrientation(LinearLayout.HORIZONTAL);
-                                TextView title = new TextView(getContext());
-                                title.setText(text[0] + ": ");
-                                title.setTypeface(null, Typeface.BOLD);
-                                TextView val = new TextView(getContext());
-                                val.setText(text[1]);
-                                boolean bold = text[2].equalsIgnoreCase("true");
-                                boolean it = text[3].equalsIgnoreCase("true");
-                                if(bold && it) {
-                                    val.setTypeface(null, Typeface.BOLD_ITALIC);
-                                } else if(bold) {
-                                    val.setTypeface(null, Typeface.BOLD);
-                                } else if(it) {
-                                    val.setTypeface(null, Typeface.ITALIC);
-                                }
-                                if(text[4].equalsIgnoreCase("small")) {
-                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_small));
-                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_small));
-                                } else if(text[4].equalsIgnoreCase("large")){
-                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_large));
-                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_large));
-                                } else {
-                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
-                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
-                                }
-                                lh.addView(title);
-                                lh.addView(val);
-                                lv.addView(lh);
-                            }
-                            lv.setClickable(true);
-                            lv.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    ///Uncomment when a listing viewer is created and modify accordingly
-//                                    Intent intent = new Intent(view.getContext().getApplicationContext(), ListingActivity.class);
-//                                    intent.putExtra("LID", obj.listingID);
-//                                    startActivity(intent);
-                                }
-                            });
-                            //Would add them in reverse, but keep plus at bottom
-                            //sv.addView(lv, 0);
-                        }
-
-//                        else {
-//                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                            startActivity(intent);
+////                        if(dataSnapshot.hasChild("guest")) {
+////                            DataSnapshot ownedListings = dataSnapshot.child("guest");
+////                            Iterable<DataSnapshot> children = ownedListings.getChildren();
+////                            for(DataSnapshot x : children) {
+////                                //May or may not work
+////                                ListingObj curr = new ListingObj((String) x.getValue(), false, getContext());
+////                                list.add(curr);
+////                            }
+////                        }
+//                        for(final ListingObj obj : list) {
+//                            //0:Title, 1:Value, 2:bold, 3:italicized, 4:size level (small, med, large)
+//                            ArrayList<String[]> info = obj.getInfoMini();
+//                            LinearLayout lv = new LinearLayout(getContext());
+//                            lv.setBackgroundColor(obj.color);
+//                            lv.setOrientation(LinearLayout.VERTICAL);
+//                            for(String[] text : info) {
+//                                LinearLayout lh = new LinearLayout(getContext());
+//                                lh.setOrientation(LinearLayout.HORIZONTAL);
+//                                TextView title = new TextView(getContext());
+//                                title.setText(text[0] + ": ");
+//                                title.setTypeface(null, Typeface.BOLD);
+//                                TextView val = new TextView(getContext());
+//                                val.setText(text[1]);
+//                                boolean bold = text[2].equalsIgnoreCase("true");
+//                                boolean it = text[3].equalsIgnoreCase("true");
+//                                if(bold && it) {
+//                                    val.setTypeface(null, Typeface.BOLD_ITALIC);
+//                                } else if(bold) {
+//                                    val.setTypeface(null, Typeface.BOLD);
+//                                } else if(it) {
+//                                    val.setTypeface(null, Typeface.ITALIC);
+//                                }
+//                                if(text[4].equalsIgnoreCase("small")) {
+//                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_small));
+//                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_small));
+//                                } else if(text[4].equalsIgnoreCase("large")){
+//                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_large));
+//                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_large));
+//                                } else {
+//                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
+//                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
+//                                }
+//                                lh.addView(title);
+//                                lh.addView(val);
+//                                lv.addView(lh);
+//                            }
+//                            lv.setClickable(true);
+//                            lv.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    ///Uncomment when a listing viewer is created and modify accordingly
+////                                    Intent intent = new Intent(view.getContext().getApplicationContext(), ListingActivity.class);
+////                                    intent.putExtra("LID", obj.listingID);
+////                                    startActivity(intent);
+//                                }
+//                            });
+//                            //Would add them in reverse, but keep plus at bottom
+//                            //sv.addView(lv, 0);
 //                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //Throw up a toast
-                    }
-                }
-        );
+//
+////                        else {
+////                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+////                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////                            startActivity(intent);
+////                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        //Throw up a toast
+//                    }
+//                }
+//        );
         return view;
     }
 
