@@ -22,7 +22,11 @@
             android:tint="@color/title"
             android:layout_gravity="center"
             />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="Minimum API Level 21\n\u00a9Umut 2016"/>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
