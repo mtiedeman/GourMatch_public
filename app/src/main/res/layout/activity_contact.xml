@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:background="@color/titleBackground"
+        android:weightSum="9"
         >
 
         <ImageView
@@ -21,8 +22,40 @@
             android:src="@drawable/contact_title"
             android:tint="@color/title"
             android:layout_gravity="center"
+            android:layout_weight="1"
             />
-
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Name"
+            android:hint="@string/Name"
+            android:textColorHighlight="@color/gourHighlight"
+            android:textColorHint="@color/gourAuthHint"
+            android:focusable="true"
+            android:layout_weight="1"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/yourEmail"
+            android:hint="@string/yourEmail"
+            android:textColorHighlight="@color/gourHighlight"
+            android:textColorHint="@color/gourAuthHint"
+            android:inputType="textEmailAddress"
+            android:focusable="true"
+            android:layout_weight="1"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ComposeEmail"
+            android:hint="@string/Message"
+            android:textColorHighlight="@color/gourHighlight"
+            android:textColorHint="@color/gourAuthHint"
+            android:inputType="textEmailSubject"
+            android:focusable="true"
+            android:layout_weight="1"
+            />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
