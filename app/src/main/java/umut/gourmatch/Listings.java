@@ -102,10 +102,10 @@ public class Listings extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.hasChild("listings")) {
+                        if (dataSnapshot.hasChild("listings")) {
                             DataSnapshot listings = dataSnapshot.child("listings");
                             Iterable<DataSnapshot> children = listings.getChildren();
-                            for(DataSnapshot x : children) {
+                            for (DataSnapshot x : children) {
                                 //May or may not work
                                 Log.d("Listings.java", "Key: " + x.getKey());
                                 ListingObj curr = new ListingObj(x.getKey(), (boolean) x.getValue(), getContext());
@@ -113,22 +113,14 @@ public class Listings extends Fragment {
                                 list.add(curr);
                             }
                         }
-//                        if(dataSnapshot.hasChild("guest")) {
-//                            DataSnapshot ownedListings = dataSnapshot.child("guest");
-//                            Iterable<DataSnapshot> children = ownedListings.getChildren();
-//                            for(DataSnapshot x : children) {
-//                                //May or may not work
-//                                ListingObj curr = new ListingObj((String) x.getValue(), false, getContext());
-//                                list.add(curr);
-//                            }
-//                        }
-                        for(final ListingObj obj : list) {
+
+                        for (final ListingObj obj : list) {
                             //0:Title, 1:Value, 2:bold, 3:italicized, 4:size level (small, med, large)
                             ArrayList<String[]> info = obj.getInfoMini();
                             LinearLayout lv = new LinearLayout(getContext());
                             lv.setBackgroundColor(obj.color);
                             lv.setOrientation(LinearLayout.VERTICAL);
-                            for(String[] text : info) {
+                            for (String[] text : info) {
                                 LinearLayout lh = new LinearLayout(getContext());
                                 lh.setOrientation(LinearLayout.HORIZONTAL);
                                 TextView title = new TextView(getContext());
@@ -138,17 +130,17 @@ public class Listings extends Fragment {
                                 val.setText(text[1]);
                                 boolean bold = text[2].equalsIgnoreCase("true");
                                 boolean it = text[3].equalsIgnoreCase("true");
-                                if(bold && it) {
+                                if (bold && it) {
                                     val.setTypeface(null, Typeface.BOLD_ITALIC);
-                                } else if(bold) {
+                                } else if (bold) {
                                     val.setTypeface(null, Typeface.BOLD);
-                                } else if(it) {
+                                } else if (it) {
                                     val.setTypeface(null, Typeface.ITALIC);
                                 }
-                                if(text[4].equalsIgnoreCase("small")) {
+                                if (text[4].equalsIgnoreCase("small")) {
                                     val.setTextSize(getResources().getDimension(R.dimen.text_size_small));
                                     title.setTextSize(getResources().getDimension(R.dimen.text_size_small));
-                                } else if(text[4].equalsIgnoreCase("large")){
+                                } else if (text[4].equalsIgnoreCase("large")) {
                                     val.setTextSize(getResources().getDimension(R.dimen.text_size_large));
                                     title.setTextSize(getResources().getDimension(R.dimen.text_size_large));
                                 } else {
@@ -172,24 +164,21 @@ public class Listings extends Fragment {
                             //Would add them in reverse, but keep plus at bottom
                             //sv.addView(lv, 0);
                         }
-
-//                        else {
-//                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                            startActivity(intent);
-//                        }
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //Throw up a toast
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            //Throw up a toast
+                        }
                     }
-                }
-        );
-        return view;
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
+                );
+
+            return view;
+
+        }
+
+                    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
 //        if (mListener != null) {
 //            mListener.onFragmentInteraction(uri);
