@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 
 /**
@@ -90,7 +92,14 @@ public class Listings extends Fragment {
                 startActivity(intent);
             }
         });
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         final ScrollView sv = (ScrollView) view.findViewById(R.id.scrollView);
+        sv.setFillViewport(false);
+        final LinearLayout main = new LinearLayout(getContext());
+        main.setLayoutParams(lp);
+        main.setOrientation(LinearLayout.VERTICAL);
+        sv.addView(main);
+
 //        int ownColor = ContextCompat.getColor(getContext(), R.color.listing_owned);
 //        int guestColor = ContextCompat.getColor(getContext(), R.color.listing_guest);
         list = new ArrayList<>();
@@ -101,6 +110,7 @@ public class Listings extends Fragment {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "Data retrieved");
 
                         if (dataSnapshot.hasChild("listings")) {
                             DataSnapshot listings = dataSnapshot.child("listings");
@@ -108,62 +118,71 @@ public class Listings extends Fragment {
                             for (DataSnapshot x : children) {
                                 //May or may not work
                                 Log.d("Listings.java", "Key: " + x.getKey());
-                                ListingObj curr = new ListingObj(x.getKey(), (boolean) x.getValue(), getContext());
-
-                                list.add(curr);
-                            }
-                        }
-
-                        for (final ListingObj obj : list) {
-                            //0:Title, 1:Value, 2:bold, 3:italicized, 4:size level (small, med, large)
-                            ArrayList<String[]> info = obj.getInfoMini();
-                            LinearLayout lv = new LinearLayout(getContext());
-                            lv.setBackgroundColor(obj.color);
-                            lv.setOrientation(LinearLayout.VERTICAL);
-                            for (String[] text : info) {
-                                LinearLayout lh = new LinearLayout(getContext());
-                                lh.setOrientation(LinearLayout.HORIZONTAL);
-                                TextView title = new TextView(getContext());
-                                title.setText(text[0] + ": ");
-                                title.setTypeface(null, Typeface.BOLD);
-                                TextView val = new TextView(getContext());
-                                val.setText(text[1]);
-                                boolean bold = text[2].equalsIgnoreCase("true");
-                                boolean it = text[3].equalsIgnoreCase("true");
-                                if (bold && it) {
-                                    val.setTypeface(null, Typeface.BOLD_ITALIC);
-                                } else if (bold) {
-                                    val.setTypeface(null, Typeface.BOLD);
-                                } else if (it) {
-                                    val.setTypeface(null, Typeface.ITALIC);
-                                }
-                                if (text[4].equalsIgnoreCase("small")) {
-                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_small));
-                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_small));
-                                } else if (text[4].equalsIgnoreCase("large")) {
-                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_large));
-                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_large));
-                                } else {
-                                    val.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
-                                    title.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
-                                }
-                                lh.addView(title);
-                                lh.addView(val);
-                                lv.addView(lh);
-                            }
-                            lv.setClickable(true);
-                            lv.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    ///Uncomment when a listing viewer is created and modify accordingly
+                                final ListingObj curr = new ListingObj(x.getKey(), (boolean) x.getValue(), getContext());
+                                curr.setVariableChangeListener(new ListingObj.VariableChangeListener() {
+                                    @Override
+                                    public void onVariableChanged(Boolean empty) {
+                                        Log.d(TAG, "onVariableChange");
+                                        list.add(curr);
+                                        //0:Title, 1:Value, 2:bold, 3:italicized, 4:size level (small, med, large)
+                                        ArrayList<String[]> info = curr.getInfoMini();
+                                        LinearLayout lv = new LinearLayout(getContext());
+                                        lv.setBackgroundColor(curr.color);
+                                        lv.setOrientation(LinearLayout.VERTICAL);
+                                        for (String[] text : info) {
+                                            LinearLayout lh = new LinearLayout(getContext());
+                                            lh.setOrientation(LinearLayout.HORIZONTAL);
+                                            TextView title = new TextView(getContext());
+                                            title.setText(text[0] + ": ");
+                                            title.setTypeface(null, Typeface.BOLD);
+                                            TextView val = new TextView(getContext());
+                                            val.setText(text[1]);
+                                            boolean bold = text[2].equalsIgnoreCase("true");
+                                            boolean it = text[3].equalsIgnoreCase("true");
+                                            if (bold && it) {
+                                                val.setTypeface(null, Typeface.BOLD_ITALIC);
+                                            } else if (bold) {
+                                                val.setTypeface(null, Typeface.BOLD);
+                                            } else if (it) {
+                                                val.setTypeface(null, Typeface.ITALIC);
+                                            }
+                                            if (text[4].equalsIgnoreCase("small")) {
+                                                val.setTextSize(getResources().getDimension(R.dimen.text_size_small));
+                                                title.setTextSize(getResources().getDimension(R.dimen.text_size_small));
+                                            } else if (text[4].equalsIgnoreCase("large")) {
+                                                val.setTextSize(getResources().getDimension(R.dimen.text_size_large));
+                                                title.setTextSize(getResources().getDimension(R.dimen.text_size_large));
+                                            } else {
+                                                val.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
+                                                title.setTextSize(getResources().getDimension(R.dimen.text_size_medium));
+                                            }
+                                            lh.addView(title);
+                                            lh.addView(val);
+                                            lv.addView(lh);
+                                        }
+                                        lv.setClickable(true);
+                                        lv.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                ///Uncomment when a listing viewer is created and modify accordingly
 //                                    Intent intent = new Intent(view.getContext().getApplicationContext(), ListingActivity.class);
 //                                    intent.putExtra("LID", obj.listingID);
 //                                    startActivity(intent);
-                                }
-                            });
-                            //Would add them in reverse, but keep plus at bottom
-                            //sv.addView(lv, 0);
+                                            }
+                                        });
+                                        main.addView(lv);
+                                        main.invalidate();
+                                        main.requestLayout();
+                                    }
+                                });
+                            }
                         }
+
+//                        for (final ListingObj obj : list) {
+//
+//                            //Would add them in reverse, but keep plus at bottom
+//                            //sv.addView(lv, 0);
+//                        }
                     }
 
                         @Override
@@ -173,8 +192,7 @@ public class Listings extends Fragment {
                     }
 
                 );
-
-            return view;
+        return view;
 
         }
 

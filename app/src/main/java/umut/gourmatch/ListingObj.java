@@ -15,6 +15,7 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by Megan on 8/3/2016.
@@ -36,6 +37,7 @@ public class ListingObj {
     private String[] infoMini;
 
     private Object lock = new Object();
+    private VariableChangeListener variableChangeListener;
 
     public ListingObj(String id, boolean owner, Context c) {
         context = c;
@@ -49,43 +51,27 @@ public class ListingObj {
         listingID = id;
         infoMini = context.getResources().getStringArray(R.array.short_listing);
         list = new HashMap<String, Object>();
-        Thread a = new Thread(new Runnable() {
+        DatabaseReference mD = FirebaseDatabase.getInstance().getReference();
+        Log.d("ListingObj", "Reach run");
+        mD.child("listings").child(listingID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void run() {
-                DatabaseReference mD = FirebaseDatabase.getInstance().getReference();
-                Log.d("ListingObj", "Reach run");
-                mD.child("listings").child(listingID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("ListingObj", "Data changed");
-                        if(dataSnapshot.hasChild("userId")) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("ListingObj", "Data changed");
+                if(dataSnapshot.hasChild("userId")) {
 
-                            empty = false;
-                            collectData(dataSnapshot);
-                        } else {
-                            try {
-                                notifyObject(lock);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
+                    collectData(dataSnapshot);
+                    empty = false;
+                    variableChangeListener.onVariableChanged(empty);
+                } else {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                }
+            }
 
-                    }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
-        a.run();
-        try {
-            Log.d("ListingObj", "Wait");
-            waitObject(lock);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Log.d("ListingObj", "End");
         //end
     }
 
@@ -97,15 +83,6 @@ public class ListingObj {
             String title = curr.getKey();
             Object val = curr.getValue();
             list.put(title, val);
-        }
-//        synchronized (lock) {
-//            lock.notify();
-//        }
-        try {
-            Log.d("ListingObj", "Notified");
-            notifyObject(lock);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
@@ -164,15 +141,11 @@ public class ListingObj {
         return empty;
     }
 
-    public void waitObject(Object object) throws InterruptedException {
-        synchronized(object) {
-            object.wait();
-        }
+    public interface VariableChangeListener {
+        public void onVariableChanged(Boolean empty);
     }
 
-    public void notifyObject(Object object) throws InterruptedException {
-        synchronized(object) {
-            object.notify();
-        }
+    public void setVariableChangeListener(VariableChangeListener variableChangeListener) {
+        this.variableChangeListener = variableChangeListener;
     }
 }

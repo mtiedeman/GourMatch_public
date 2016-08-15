@@ -9,4 +9,5 @@
     <dimen name="text_size_medium">22sp</dimen>
     <dimen name="text_size_large">26sp</dimen>
     <dimen name="title_padding">10dp</dimen>
+    <dimen name="plus_size">48dp</dimen>
 </resources>

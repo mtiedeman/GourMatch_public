@@ -59,8 +59,6 @@
     <string name="total_seats">Total Seats</string>
     <string-array name="short_listing">
         <item>Title</item>
-        <item>Date</item>
-        <item>Time</item>
         <item>Location</item>
         <item>Address</item>
     </string-array>
